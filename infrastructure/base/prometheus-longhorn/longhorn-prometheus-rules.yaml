@@ -1,4 +1,4 @@
-# infrastructure/base/prometheus-longhorn/prometheusrule.yaml
+# infrastructure/base/prometheus-longhorn/prometheusrules.yaml
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -7,7 +7,6 @@ metadata:
     prometheus: longhorn
     role: alert-rules
   name: longhorn-prometheus-rules
-  namespace: logging
 spec:
   groups:
   - name: longhorn.rules

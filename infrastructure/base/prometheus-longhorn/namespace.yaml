@@ -1,6 +1,6 @@
-# infrastructure/base/openhab/namespace.yaml
+# infrastructure/base/prometheus-longhorn/namespace.yaml
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: prometheus
+  name: logging
