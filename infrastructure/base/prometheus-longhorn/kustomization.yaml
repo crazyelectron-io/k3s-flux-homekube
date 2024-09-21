@@ -1,9 +1,6 @@
 # infrastructure/base/prometheus-longhorn/kustomization.yaml
 ---
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
 namespace: logging
 resources:
-- namespace.yaml
-- longhorn-prometheus-servicemonitor.yaml
-- longhorn-prometheus-rules.yaml
+- longhorn-prom-servicemonitor.yaml
+- longhorn-prom-rules.yaml
