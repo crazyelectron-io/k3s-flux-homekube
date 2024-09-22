@@ -1,9 +1,0 @@
-# infrastructure/production/prometheus-longhorn/kustomization.yaml
----
-namePrefix: tst-
-namespace: logging
-resources:
-- ../../base/prometheus-longhorn
-- namespace.yaml
-# patchesStrategicMerge:
-# - deployment.yaml
