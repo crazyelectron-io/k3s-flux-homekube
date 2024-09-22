@@ -1,0 +1,12 @@
+# clusters/production/openhab-source.yaml
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: openhab
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/crazyelectron-io/openhab.git
+  ref:
+    branch: main
