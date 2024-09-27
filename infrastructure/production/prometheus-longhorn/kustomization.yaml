@@ -3,7 +3,6 @@
 namespace: logging
 resources:
 - ../../base/prometheus-longhorn
-- ../../base/reloader
 - namespace.yaml
 # patchesStrategicMerge:
 #   - deployment.yaml

@@ -1,0 +1,6 @@
+# infrastructure/production/reloader/kustomization.yaml
+---
+namespace: default
+resources:
+- ../../base/reloader
+- namespace.yaml
