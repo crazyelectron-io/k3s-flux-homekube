@@ -16,9 +16,11 @@ kind: Kustomization
 metadata:
   name: openhab
   namespace: flux-system
-  labels:
-    app.kubernetes.io/sops: enabled
 spec:
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   interval: 10m0s
   prune: true
   path: ./kustomize/production
