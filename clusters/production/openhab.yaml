@@ -16,6 +16,8 @@ kind: Kustomization
 metadata:
   name: openhab
   namespace: flux-system
+  labels:
+    app.kubernetes.io/sops: enabled
 spec:
   interval: 10m0s
   prune: true
