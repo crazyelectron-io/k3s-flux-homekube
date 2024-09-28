@@ -4,5 +4,3 @@ namespace: logging
 resources:
 - ../../base/prometheus-longhorn
 - namespace.yaml
-# patchesStrategicMerge:
-#   - deployment.yaml
