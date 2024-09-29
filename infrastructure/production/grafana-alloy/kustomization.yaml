@@ -8,3 +8,6 @@ patches:
   - path: ingressroute-patch.yaml
     target:
       kind: IngressRoute
+  - path: chart-patch.yaml
+    target:
+      kind: HelmChart
