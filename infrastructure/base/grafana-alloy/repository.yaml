@@ -8,5 +8,5 @@ metadata:
 spec:
   # url: https://grafana.github.io/helm-charts
   # type: default
-  url: oci://ghcr.io/grafana/charts
+  url: oci://ghcr.io/grafana/helm-charts
   type: oci
