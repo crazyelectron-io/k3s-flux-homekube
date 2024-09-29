@@ -4,7 +4,7 @@ namespace: logging
 resources:
 - ../../base/grafana-alloy
 - namespace.yaml
-# patches:
-#   - path: ingressroute-patch.yaml
-#     target:
-#       kind: IngressRoute
+patches:
+  - path: ingressroute-patch.yaml
+    target:
+      kind: IngressRoute
