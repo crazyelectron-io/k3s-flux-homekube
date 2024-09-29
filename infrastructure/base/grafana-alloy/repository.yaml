@@ -6,7 +6,5 @@ metadata:
   name: grafana-alloy
   namespace: flux-system
 spec:
-  # url: https://grafana.github.io/helm-charts
-  # type: default
-  url: oci://ghcr.io/grafana/helm-charts
-  type: oci
+  url: https://grafana.github.io/helm-charts
+  type: default
