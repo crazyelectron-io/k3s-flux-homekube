@@ -1,0 +1,6 @@
+# infrastructure/production/grafana-alloy/namespace.yaml
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: logging

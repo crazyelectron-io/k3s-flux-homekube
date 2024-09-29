@@ -1,0 +1,10 @@
+# infrastructure/production/grafana-alloy/kustomization.yaml
+---
+namespace: logging
+resources:
+- ../../base/grafana-alloy
+- namespace.yaml
+patches:
+  - path: ingressroute-patch.yaml
+    target:
+      kind: IngressRoute

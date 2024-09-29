@@ -6,3 +6,4 @@ namespace: logging
 resources:
   - namespace.yaml
   - repository.yaml
+  - ingressroute.yaml
