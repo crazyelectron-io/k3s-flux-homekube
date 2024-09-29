@@ -1,4 +1,4 @@
-# infrastructure/base/grafana-alloy/kustomization.yaml
+# k3s-flux-home-kube:infrastructure/base/grafana-alloy/kustomization.yaml
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
