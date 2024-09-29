@@ -7,4 +7,4 @@ metadata:
 spec:
   interval: 1h
   chart: grafana/alloy
-  version: 0.8.x
+  version: 0.8.1
