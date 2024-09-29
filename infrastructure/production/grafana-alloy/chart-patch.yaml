@@ -1,0 +1,9 @@
+# infrastructure/production/grafana-alloy/chart-patch.yaml
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmChart
+metadata:
+  name: grafana-alloy
+spec:
+  interval: 7h
+  version: 8.5.x

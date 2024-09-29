@@ -1,0 +1,12 @@
+# infrastructure/base/grafana-alloy/chart.yaml
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmChart
+metadata:
+  name: grafana-alloy
+spec:
+  interval: 24h
+  chart: grafana/alloy
+  sourceRef:
+    kind: HelmRepository
+    name: grafana-alloy

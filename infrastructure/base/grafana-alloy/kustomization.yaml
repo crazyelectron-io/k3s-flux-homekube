@@ -5,4 +5,5 @@ kind: Kustomization
 namespace: logging
 resources:
   - repository.yaml
+  - chart.yaml
   - ingressroute.yaml
