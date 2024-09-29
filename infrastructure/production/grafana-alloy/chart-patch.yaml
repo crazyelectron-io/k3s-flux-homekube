@@ -8,3 +8,6 @@ spec:
   interval: 2h
   chart: grafana/alloy
   version: 0.8.0
+  sourceRef:
+    kind: HelmRepository
+    name: grafana-alloy
