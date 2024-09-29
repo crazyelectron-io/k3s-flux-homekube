@@ -1,0 +1,9 @@
+---
+apiVersion: source.toolkit.fluxcd.io/1beta2
+kind: HelmRepository
+metadata:
+  name: nginx
+  namespace: nginx
+spec:
+  url: oci://ghcr.io/ginxinc/charts
+  type: oci
