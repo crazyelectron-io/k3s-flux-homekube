@@ -3,10 +3,10 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmChart
 metadata:
-  name: grafana-alloy
+  name: grafana
 spec:
-  interval: 24h
-  chart: grafana/alloy
+  interval: 10m0s
+  chart: alloy
   sourceRef:
     kind: HelmRepository
-    name: grafana-alloy
+    name: grafana
