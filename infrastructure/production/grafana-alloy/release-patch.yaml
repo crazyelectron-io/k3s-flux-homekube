@@ -9,8 +9,8 @@ spec:
   # releaseName: alloy
   chart:
     spec:
-      chart: alloy
-      interval: 10m
+      # chart: alloy
+      # interval: 10m
       version: 0.8.0
       # sourceRef:
       #   kind: HelmRepository
