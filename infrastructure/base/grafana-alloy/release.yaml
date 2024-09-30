@@ -1,6 +1,6 @@
 # infrastructure/base/grafana-alloy/release.yaml
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 Kind: HelmRelease
 metadata:
   name: alloy
