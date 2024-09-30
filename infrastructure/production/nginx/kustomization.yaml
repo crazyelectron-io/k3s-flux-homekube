@@ -1,4 +1,0 @@
-# infrastructure/production/nginx/kustomization.yaml
----
-resources:
-  - ../../base/nginx
