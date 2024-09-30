@@ -7,15 +7,15 @@ metadata:
   namespace: logging
 spec:
   releaseName: alloy
-  chart:
-    spec:
-      chart: alloy
+  # chart:
+  #   spec:
+  #     chart: alloy
       # interval: 10h
       # version: 0.8.0
-      sourceRef:
-        kind: HelmRepository
-        name: grafana
+      # sourceRef:
+      #   kind: HelmRepository
+      #   name: grafana
   # interval: 1h
   install:
     remediation:
-      retries: 2
+      retries: 3
