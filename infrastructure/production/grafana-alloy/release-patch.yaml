@@ -1,4 +1,4 @@
-# infrastructure/production/grafana-alloy/release-patch.yaml
+# k3s-flux-homekube:infrastructure/production/grafana-alloy/release-patch.yaml
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
