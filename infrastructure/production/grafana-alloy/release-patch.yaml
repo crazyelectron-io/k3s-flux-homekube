@@ -6,7 +6,7 @@ metadata:
   name: alloy
   namespace: logging
 spec:
-  # releaseName: alloy
+  releaseName: alloy
   chart:
     spec:
       # chart: alloy
