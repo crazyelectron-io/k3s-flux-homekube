@@ -8,6 +8,6 @@ patches:
   - path: ingressroute-patch.yaml
     target:
       kind: IngressRoute
-  # - path: release-patch.yaml
-  #   target:
-  #     kind: HelmRelease
+  - path: release-patch.yaml
+    target:
+      kind: HelmRelease
