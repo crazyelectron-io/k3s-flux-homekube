@@ -4,7 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 Kind: HelmRelease
 metadata:
   name: alloy
-  # namespace: logging
+  namespace: logging
 spec:
   chart:
     spec:
