@@ -1,9 +1,9 @@
-# k3s-flux-home-kube:infrastructure/base/grafana-alloy/kustomization.yaml
+# infrastructure/base/grafana-alloy/kustomization.yaml
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: logging
+# namespace: logging
 resources:
   - repository.yaml
-  - chart.yaml
+  - release.yaml
   - ingressroute.yaml
