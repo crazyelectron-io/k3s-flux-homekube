@@ -1,0 +1,10 @@
+# infrastructure/production/grafana-loki/kustomization.yaml
+---
+namespace: logging
+resources:
+- ../../base/grafana-loki
+- namespace.yaml
+patches:
+  - path: release-patch.yaml
+    target:
+      kind: HelmRelease

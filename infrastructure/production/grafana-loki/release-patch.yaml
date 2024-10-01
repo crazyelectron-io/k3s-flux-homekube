@@ -1,0 +1,12 @@
+# infrastructure/production/grafana-loki/release-patch.yaml
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: loki
+spec:
+  releaseName: loki
+  chart:
+    spec:
+      version: 3.1.1
+  interval: 10m0s

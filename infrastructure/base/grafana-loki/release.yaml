@@ -1,0 +1,202 @@
+# infrastructure/base/grafana-loki/release.yaml 
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: loki
+spec:
+  releaseName: loki
+  chart:
+    spec:
+      chart: loki
+      interval: 22h
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+  interval: 1h
+  install:
+    remediation:
+      retries: 2
+  upgrade:
+    remediation:
+      retries: 2
+  values:
+    deploymentMode: SingleBinary
+    singleBinary:
+      replicas: 1
+    read:
+      replicas: 0
+    backend:
+      replicas: 0
+    write:
+      replicas: 0
+    enterprise:
+
+      # Enable enterprise features, license must be provided
+      enabled: false
+
+    loki:
+      enabled: true
+      isDefault: true
+      commonConfig:
+        replication_factor: 1
+      storage:
+        type: 'filesystem'
+      schemaConfig:
+        configs:
+        - from: "2024-09-01"
+          store: tsdb
+          index:
+            prefix: loki_index_
+            period: 24h
+          object_store: filesystem
+          schema: v13
+
+      readinessProbe:
+        httpGet:
+          path: /ready
+          port: http-metrics
+        initialDelaySeconds: 45
+        timeoutSeconds: 1
+      livenessProbe:
+        httpGet:
+          path: /ready
+          port: http-metrics
+        initialDelaySeconds: 45
+
+      image:
+        registry: "${HARBOR_REGISTRY}"
+        repository: loki
+        tag: 3.1.1
+
+      configStorageType: ConfigMap
+      configObjectName: loki-config
+
+      datasource:
+        jsonData: "{}"
+        uid: ""
+
+      # config: |
+      #   auth_enabled: false
+      #   server:
+      #     http_listen_port: 3100
+      #     grpc_listen_port: 9096
+      #     http_server_read_timeout: 600s
+      #     http_server_write_timeout: 600s
+      #   common:
+      #     path_prefix: /tmp/loki
+      #     storage:
+      #       filesystem:
+      #         chunks_directory: /tmp/loki/chunks
+      #         rules_directory: /tmp/loki/rules
+      #     replication_factor: 1
+      #     ring:
+      #       instance_addr: 127.0.0.1
+      #       kvstore:
+      #         store: inmemory
+      #   limits_config:
+      #     retention_period: 72h
+      #     reject_old_samples: true
+      #     reject_old_samples_max_age: 168h
+      #     max_cache_freshness_per_query: 10m
+      #     split_queries_by_interval: 15m
+      #     query_timeout: 300s
+      #     volume_enabled: true
+      #     # for big logs tune
+      #     per_stream_rate_limit: 512M
+      #     per_stream_rate_limit_burst: 1024M
+      #     cardinality_limit: 200000
+      #     ingestion_burst_size_mb: 1000
+      #     ingestion_rate_mb: 10000
+      #     max_entries_limit_per_query: 1000000
+      #     max_label_value_length: 20480
+      #     max_label_name_length: 10240
+      #     max_label_names_per_series: 300
+      #   schema_config:
+      #     configs:
+      #       - from: 2024-09-01
+      #         store: tsdb
+      #         object_store: filesystem
+      #         schema: v13
+      #         index:
+      #           prefix: loki_index_
+      #           period: 24h
+      #   ruler:
+      #     alertmanager_url: 'http://localhost:9093'
+
+      # The Loki canary pushes logs to and queries from this loki installation to test
+      # that it's working correctly
+      lokiCanary:
+        enabled: true
+        # -- If true, the canary will send directly to Loki via the address configured for verification --
+        # -- If false, it will write to stdout and an Agent will be needed to scrape and send the logs --
+        push: true
+        # -- The name of the label to look for at loki when doing the checks.
+        labelname: pod
+        # -- Image to use for loki canary
+        image:
+          registry: "${HARBOR_REGISTRY}"
+          repository: loki-canary
+          tag: 3.1.1
+          pullPolicy: IfNotPresent
+        # -- Update strategy for the `loki-canary` Daemonset pods
+        updateStrategy:
+          type: RollingUpdate
+          rollingUpdate:
+            maxUnavailable: 1
+
+      ######################################################################################################################
+      # Gateway and Ingress
+      #
+      # By default this chart will deploy a Nginx container to act as a gateway which handles routing of traffic
+      # and can also do auth.
+      #
+      # If you would prefer you can optionally disable this and enable using k8s ingress to do the incoming routing.
+      ######################################################################################################################
+
+      # Configuration for the gateway
+      gateway:
+        # -- Specifies whether the gateway should be enabled
+        enabled: false
+        # -- Number of replicas for the gateway
+        replicas: 1
+        # -- Default container port
+        containerPort: 8080
+        # -- Enable logging of 2xx and 3xx HTTP requests
+        verboseLogging: true
+        autoscaling:
+          # -- Enable autoscaling for the gateway
+          enabled: false
+        deploymentStrategy:
+          type: RollingUpdate
+        image:
+          registry: "${HARBOR_REGISTRY}"
+          repository: nginx-unprivileged
+          tag: 1.27-alpine
+
+      chunksCache:
+        # -- Specifies whether memcached based chunks-cache should be enabled
+        enabled: true
+        # -- Batchsize for sending and receiving chunks from chunks cache
+        batchSize: 4
+        # -- Parallel threads for sending and receiving chunks from chunks cache
+        parallelism: 5
+        # -- Memcached operation timeout
+        timeout: 2000ms
+        # -- Specify how long cached chunks should be stored in the chunks-cache before being expired
+        defaultValidity: 0s
+        # -- Total number of chunks-cache replicas
+        replicas: 1
+        # -- Port of the chunks-cache service
+        port: 11211
+        # -- Pod Disruption Budget
+        podDisruptionBudget:
+          maxUnavailable: 1
+        # -- Stateful chunks-cache strategy
+        statefulStrategy:
+          type: RollingUpdate
+
+      memcached:
+        image:
+          repository: "${HARBOR_REGISTRY}/memcached"
+          tag: 1.6.23-alpine

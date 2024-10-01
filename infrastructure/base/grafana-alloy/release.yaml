@@ -192,13 +192,11 @@ spec:
         # -- Extra volume mounts to add into the Grafana Alloy container.
         extra: []
       resources: {}
-
     image:
       registry: "${HARBOR_REGISTRY}"
       repository: alloy
       tag: v1.3.1
       pullPolicy: IfNotPresent
-
     # Options for the extra controller used for config reloading.
     configReloader:
       enabled: true
@@ -211,20 +209,17 @@ spec:
         requests:
           cpu: "1m"
           memory: "5Mi"
-
     controller:
       type: 'daemonset'
       dnsPolicy: ClusterFirst
       updateStrategy: {}
       initContainers: []
-
     service:
       enabled: true
       type: ClusterIP
       clusterIP: ''
       internalTrafficPolicy: Cluster
       annotations: {}
-
     serviceMonitor:
       enabled: true
       additionalLabels: {}
@@ -246,7 +241,6 @@ spec:
       #   targetLabel: nodename
       #   replacement: $1
       #   action: replace
-
     ingress:
       # We'll use Traefik IngressRoutes (#TODO: Migrate to Gateway)
       enabled: false
