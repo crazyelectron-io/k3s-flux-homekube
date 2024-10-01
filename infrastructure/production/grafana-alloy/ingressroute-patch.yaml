@@ -8,7 +8,7 @@ metadata:
     kubernetes.io/ingress.class: traefik-external
 spec:
   routes:
-    - match: "Host(`alloy.${MAN_DOMAIN}`)"
+    - match: "Host(`alloy.${MAIN_DOMAIN}`)"
       kind: Rule
       services:
         - name: grafana-alloy
