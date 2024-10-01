@@ -125,7 +125,7 @@ spec:
           loki.process "pod_logs" {
             stage.static_labels {
                 values = {
-                  cluster = "{{cluster_name}}",
+                  cluster = "${CLUSTER_NAME}",
                 }
             }
             forward_to = [loki.write.default.receiver]
@@ -144,7 +144,7 @@ spec:
             forward_to = [loki.write.default.receiver]
             stage.static_labels {
               values = {
-                cluster = "{{cluster_name}}",
+                cluster = "${CLUSTER_NAME}",
               }
             }
             stage.labels {
