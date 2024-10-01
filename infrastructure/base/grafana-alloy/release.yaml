@@ -29,6 +29,7 @@ spec:
             level = "info"
             format = "logfmt"
           }
+          
           // Define the Loki receiver endpoint to forward logs to.
           loki.write "default" {
             endpoint {
