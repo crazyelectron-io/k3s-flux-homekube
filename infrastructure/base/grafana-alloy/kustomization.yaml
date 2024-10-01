@@ -1,4 +1,4 @@
-# infrastructure/base/grafana-loki/kustomization.yaml
+# infrastructure/base/grafana-alloy/kustomization.yaml
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization

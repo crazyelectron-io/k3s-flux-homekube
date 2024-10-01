@@ -1,9 +1,9 @@
-# infrastructure/base/grafana-loki/ingressroute.yaml
+# infrastructure/base/grafana-alloy/ingressroute.yaml
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: loki
+  name: alloy
 spec:
   entryPoints:
     - websecure
@@ -11,6 +11,6 @@ spec:
     - match: "Host(`fix-me.example.com`)"
       kind: Rule
       services:
-        - name: loki
-          port: 3100
+        - name: alloy
+          port: 12345
   tls: {}
