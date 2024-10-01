@@ -1,6 +1,6 @@
 # infrastructure/production/prometheus-longhorn/kustomization.yaml
 ---
-namespace: logging
+namespace: ${OBSERVABILITY_NAMESPACE}
 resources:
 - ../../base/prometheus-longhorn
 - namespace.yaml
