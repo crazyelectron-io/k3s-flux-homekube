@@ -198,16 +198,16 @@ spec:
       resources: {}
 
     image:
-      registry: "{{harbor_registry}}"
+      registry: "${HARBOR_REGISTRY}"
       repository: alloy
-      tag: "{{alloy_image_tag}}"
+      tag: v1.3.1
       pullPolicy: IfNotPresent
 
     # Options for the extra controller used for config reloading.
     configReloader:
       enabled: true
       image:
-        registry: "{{harbor_registry}}"
+        registry: "${HARBOR_REGISTRY}"
         repository: configmap-reload #jimmidyson/configmap-reload
         tag: v0.12.0
       customArgs: []
