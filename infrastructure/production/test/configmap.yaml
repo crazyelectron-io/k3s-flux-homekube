@@ -7,4 +7,4 @@ metadata:
     labels:
       app.test: ${MAIN_DOMAIN}
 data:
-  testparam: xxx
+  testparam: ${MAIN_DOMAIN}
