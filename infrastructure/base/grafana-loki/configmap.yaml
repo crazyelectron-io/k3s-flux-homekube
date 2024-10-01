@@ -5,7 +5,7 @@ kind: ConfigMap
 metadata:
   name: loki-config
 data:
-  loki.yaml: |
+  config.yaml: |
     auth_enabled: false
     server:
       http_listen_port: 3100
