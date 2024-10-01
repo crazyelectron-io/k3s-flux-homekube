@@ -1,6 +1,0 @@
-# infrastructure/production/test/kustomization.yaml
----
-namespace: logging
-resources:
-- namespace.yaml
-- configmap.yaml
