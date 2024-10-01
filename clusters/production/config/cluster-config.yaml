@@ -6,4 +6,5 @@ metadata:
     name: cluster-config
     # namespace: flux-system
 stringData:
+  CLUSTER_NAME: homekube
   OBSERVABILITY_NAMESPACE: logging

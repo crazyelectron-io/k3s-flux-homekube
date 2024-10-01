@@ -41,7 +41,7 @@ spec:
                 __path__  = "/var/log/syslog",
                 job       = "node/syslog",
                 node_name = env("HOSTNAME"),
-                cluster   = "{{cluster_name}}",
+                cluster   = "${CLUSTER_NAME}",
             }]
           }
           // Read syslog from the nodes and forward them to the Loki receiver.
