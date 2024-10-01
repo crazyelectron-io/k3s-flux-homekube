@@ -11,6 +11,6 @@ spec:
     - match: "Host(`fix-me.example.com`)"
       kind: Rule
       services:
-        - name: grafana-alloy
+        - name: alloy
           port: 12345
   tls: {}
