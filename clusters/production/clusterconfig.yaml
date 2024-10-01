@@ -1,20 +1,18 @@
-# clusters/production/apps.yaml
+# clusters/production/kustomization.yaml
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: apps
+  name: clusterconfig
   namespace: flux-system
 spec:
   decryption:
     provider: sops
     secretRef:
       name: sops-age
-  interval: 10m0s
-  path: ./apps/production
+  interval: 5m0s
+  path: ./clusters/production/config
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  dependsOn:
-    - name: infrastructure
