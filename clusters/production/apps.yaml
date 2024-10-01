@@ -18,3 +18,9 @@ spec:
     name: flux-system
   dependsOn:
     - name: infrastructure
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-config
+      - kind: Secret
+        name: cluster-secrets
