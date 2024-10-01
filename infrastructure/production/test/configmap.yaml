@@ -4,5 +4,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
     name: test-config
+    labels:
+      app.test: ${MAIN_DOMAIN}
 data:
-  testparam: ${MAIN_DOMAIN}
+  testparam: xxx
