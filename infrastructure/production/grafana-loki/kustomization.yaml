@@ -3,7 +3,7 @@
 namespace: logging
 resources:
 - ../../base/grafana-loki
-- namespace.yaml
+# - namespace.yaml
 patches:
   - path: release-patch.yaml
     target:
