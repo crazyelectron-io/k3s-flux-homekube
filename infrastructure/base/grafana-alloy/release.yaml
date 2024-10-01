@@ -1,4 +1,4 @@
-# infrastructure/base/grafana-alloy/release.yaml
+# infrastructure/base/grafana-alloy/release.yaml 
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -29,10 +29,6 @@ spec:
             level = "info"
             format = "logfmt"
           }
-          // For live debugging, enable the block below and add `--stability.level=exeperimental` command line flag.
-          //livedebugging {
-          //  enabled = true
-          //}
           // Define the Loki receiver endpoint to forward logs to.
           loki.write "default" {
             endpoint {
