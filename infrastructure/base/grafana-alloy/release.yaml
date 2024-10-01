@@ -29,11 +29,10 @@ spec:
             level = "info"
             format = "logfmt"
           }
-          
           // Define the Loki receiver endpoint to forward logs to.
           loki.write "default" {
             endpoint {
-              url = "http://loki.${OBSERVABILITY_NAMESPACE}.svc.cluster.local:3100/loki/api/v1/push"
+              url = "http://loki.logging.svc.cluster.local:3100/loki/api/v1/push"
             }
           }
           // Monitor syslog to scrape node-logs (returns an array of file paths).
@@ -42,7 +41,7 @@ spec:
                 __path__  = "/var/log/syslog",
                 job       = "node/syslog",
                 node_name = env("HOSTNAME"),
-                cluster   = "${CLUSTER_NAME}",
+                cluster   = "homekube",
             }]
           }
           // Read syslog from the nodes and forward them to the Loki receiver.
@@ -126,7 +125,7 @@ spec:
           loki.process "pod_logs" {
             stage.static_labels {
                 values = {
-                  cluster = "${CLUSTER_NAME}",
+                  cluster = "homekube",
                 }
             }
             forward_to = [loki.write.default.receiver]
@@ -145,7 +144,7 @@ spec:
             forward_to = [loki.write.default.receiver]
             stage.static_labels {
               values = {
-                cluster = "${CLUSTER_NAME}",
+                cluster = "homekube",
               }
             }
             stage.labels {
