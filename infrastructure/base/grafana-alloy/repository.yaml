@@ -1,9 +1,0 @@
-# infrastructure/base/grafana-loki/repository.yaml
----
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
-metadata:
-  name: grafana
-spec:
-  url: https://grafana.github.io/helm-charts
-  type: default
