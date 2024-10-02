@@ -1,0 +1,10 @@
+# apps/production/home-assistant/kustomization.yaml
+---
+namespace: automation
+resources:
+- ../../base/home-assistant
+- namespace.yaml
+patches:
+  - path: ingressroute-patch.yaml
+    target:
+      kind: IngressRoute

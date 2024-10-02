@@ -1,10 +1,10 @@
-# infrastructure/production/config/cluster-config.yaml 
+# clusters/production/config/cluster-config.yaml 
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
     name: cluster-config
-    # namespace: flux-system
 stringData:
   CLUSTER_NAME: homekube
   OBSERVABILITY_NAMESPACE: logging
+  AUTOMATION_NAMESPACE: automation

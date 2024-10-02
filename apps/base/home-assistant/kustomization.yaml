@@ -1,0 +1,5 @@
+# apps/base//home-assistant/kustomization.yaml
+---
+namespace: automation
+resources:
+- pg-secrets.sops.yaml

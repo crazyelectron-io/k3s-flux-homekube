@@ -11,6 +11,7 @@ spec:
     secretRef:
       name: sops-age
   interval: 10m0s
+  retryInterval: 1m0s
   path: ./infrastructure/production
   prune: true
   sourceRef:
@@ -24,3 +25,18 @@ spec:
         name: cluster-config
       - kind: Secret
         name: cluster-secrets
+#---
+#apiVersion: notification.toolkit.fluxcd.io/v1beta1
+#kind: Alert
+#metadata:
+#  name: flux-system
+#  namespace: flux-system
+#spec:
+#  providerRef: 
+#    name: on-call-slack
+#  eventSeverity: info
+#  eventSources:
+#    - kind: Kustomization
+#      name: '*'
+#  exclusionList:
+#    - "^Dependencies.*"

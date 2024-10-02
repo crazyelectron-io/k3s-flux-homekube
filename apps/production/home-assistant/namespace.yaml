@@ -1,0 +1,6 @@
+# apps/production/home-assistant/namespace.yaml
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${AUTOMATION_NAMESPACE}

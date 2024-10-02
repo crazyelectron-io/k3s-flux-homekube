@@ -1,0 +1,6 @@
+# apps/production/cloudnative-pg/kustomization.yaml
+---
+namespace: cnpg-system
+resources:
+- ../../base/cloudnative-pg
+- namespace.yaml
