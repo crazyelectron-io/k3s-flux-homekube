@@ -1,0 +1,9 @@
+# infrastructure/production/prometheus-operatior/kustomization.yaml
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ${OBSERVABILITY_NAMESPACE}
+resources:
+- ../../base/prometheus-operator
+- namespace.yaml

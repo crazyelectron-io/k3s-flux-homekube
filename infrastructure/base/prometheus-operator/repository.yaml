@@ -1,0 +1,11 @@
+# infrastructure/base/grafana-loki/repository.yaml
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: prometheus-operator
+spec:
+  interval: 5m0s
+  url: oci://registry-1.docker.io/bitnamicharts/kube-prometheus
+  ref:
+    tag: 9.6.3
