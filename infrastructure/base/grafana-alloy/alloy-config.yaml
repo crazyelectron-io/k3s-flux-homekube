@@ -1,0 +1,158 @@
+# infrastructure/base/grafana-alloy/configmap.yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alloy-config
+data:
+  config.alloy: |
+    logging {
+      level = "info"
+      format = "logfmt"
+    }
+    // Define the Loki receiver endpoint to forward logs to.
+    loki.write "default" {
+      endpoint {
+        url = env("LOKI_URL")
+      }
+    }
+    // Monitor syslog to scrape node-logs (returns an array of file paths).
+    local.file_match "node_logs" {
+      path_targets = [{
+          __path__  = "/var/log/syslog",
+          job       = "node/syslog",
+          node_name = env("HOSTNAME"),
+          cluster   = "homekube",
+      }]
+    }
+    // Read syslog from the nodes and forward them to the Loki receiver.
+    loki.source.file "node_logs" {
+      targets    = local.file_match.node_logs.targets
+      forward_to = [loki.write.default.receiver]
+    }
+    // Dynamically find scrape targets from Kubernetes resources by watching cluster state.
+    discovery.kubernetes "pod" {
+      role = "pod"
+      selectors {
+        role = "pod"
+        field = "spec.nodeName=" + coalesce(env("HOSTNAME"), constants.hostname)
+      }
+    }
+    // Rewrite the label set of the pods by applying relabeling rules.
+    discovery.relabel "pod_logs" {
+      targets = discovery.kubernetes.pod.targets
+      // Label creation - "namespace" field from "__meta_kubernetes_namespace"
+      rule {
+        source_labels = ["__meta_kubernetes_namespace"]
+        action = "replace"
+        target_label = "namespace"
+      }
+      // Label creation - "node" field from "__meta_kubernetes_pod_node_name"
+      rule {
+        source_labels = ["__meta_kubernetes_pod_node_name"]
+        action = "replace"
+        target_label = "node"
+      }
+      // Label creation - "pod" field from "__meta_kubernetes_pod_name"
+      rule {
+        source_labels = ["__meta_kubernetes_pod_name"]
+        action = "replace"
+        target_label = "pod"
+      }
+      // Label creation - "container" field from "__meta_kubernetes_pod_container_name"
+      rule {
+        source_labels = ["__meta_kubernetes_pod_container_name"]
+        action = "replace"
+        target_label = "container"
+      }
+      // Label creation -  "app" field from "__meta_kubernetes_pod_label_app_kubernetes_io_name"
+      rule {
+        source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+        action = "replace"
+        target_label = "app"
+      }
+      // Label creation -  "job" field from "__meta_kubernetes_namespace" and "__meta_kubernetes_pod_container_name"
+      rule {
+        source_labels = ["__meta_kubernetes_namespace", "__meta_kubernetes_pod_container_name"]
+        action = "replace"
+        target_label = "job"
+        separator = "/"
+        replacement = "$1"
+      }
+      // Label creation - "container" field from "__meta_kubernetes_pod_uid" and "__meta_kubernetes_pod_container_name"
+      rule {
+        source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
+        action = "replace"
+        target_label = "__path__"
+        separator = "/"
+        replacement = "/var/log/pods/*$1/*.log"
+      }
+      // Label creation -  "container_runtime" field from "__meta_kubernetes_pod_container_id"
+      rule {
+        source_labels = ["__meta_kubernetes_pod_container_id"]
+        action = "replace"
+        target_label = "container_runtime"
+        regex = "^(\\S+):\\/\\/.+$"
+        replacement = "$1"
+      }
+    }
+    // loki.source.kubernetes tails logs from Kubernetes containers using the Kubernetes API.
+    loki.source.kubernetes "pod_logs" {
+      targets    = discovery.relabel.pod_logs.output
+      forward_to = [loki.process.pod_logs.receiver]
+    }
+    // receive log entries from other Loki components, adds a cluster label to it and
+    // forwards the result to the default loki writer.
+    loki.process "pod_logs" {
+      stage.static_labels {
+          values = {
+            cluster = "homekube",
+          }
+      }
+      forward_to = [loki.write.default.receiver]
+    }
+    // tail events from the Kubernetes API and converts them into log lines to forward to other Loki components.
+    loki.source.kubernetes_events "cluster_events" {
+      job_name   = "integrations/kubernetes/eventhandler"
+      log_format = "logfmt"
+      forward_to = [
+        loki.process.cluster_events.receiver,
+      ]
+    }
+    // Receive K3s log entries from other loki components, add cluster label and forwards the result
+    // to the default loki receiver.
+    loki.process "cluster_events" {
+      forward_to = [loki.write.default.receiver]
+      stage.static_labels {
+        values = {
+          cluster = "homekube",
+        }
+      }
+      stage.labels {
+        values = {
+          kubernetes_cluster_events = "job",
+        }
+      }
+    }
+    loki.source.syslog "local" {
+      listener {
+        address = "127.0.0.1:8514"
+        protocol = "udp"
+        labels   = { component = "loki.source.syslog", protocol = "udp"}
+      }
+      listener {
+        address  = "127.0.0.1:9514"
+        labels   = { component = "loki.source.syslog", protocol = "tcp" }
+      }
+      forward_to = [loki.write.default.receiver]
+    }
+    // Receive rsyslog entries from other loki components, add label and forward the result
+    // to the default loki receiver.
+    loki.process "rsyslog_events" {
+      forward_to = [loki.write.default.receiver]
+      stage.static_labels {
+        values = {
+          syslog = "homelog",
+        }
+      }
+    }

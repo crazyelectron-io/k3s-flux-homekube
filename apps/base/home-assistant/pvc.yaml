@@ -1,0 +1,12 @@
+# apps/base/home-assistant/pvc.yaml
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: homeassistant-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi

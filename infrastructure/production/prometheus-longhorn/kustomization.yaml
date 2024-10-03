@@ -1,6 +1,9 @@
 # infrastructure/production/prometheus-longhorn/kustomization.yaml
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 ---
-namespace: ${OBSERVABILITY_NAMESPACE}
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: logging
 resources:
 - ../../base/prometheus-longhorn
 - namespace.yaml

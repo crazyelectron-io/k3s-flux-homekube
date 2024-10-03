@@ -1,0 +1,8 @@
+# infrastructure/base/grafana-alloy/configmap.yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alloy-env
+stringData:
+  LOKI_URL: http://loki.${OBSERVABILITY_NAMESPACE}.svc.cluster.local:3100/loki/api/v1/push
