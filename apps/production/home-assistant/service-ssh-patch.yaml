@@ -1,0 +1,8 @@
+# apps/production/home-assistant/service-ssh-patch.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homeassistant-ssh
+spec:
+  loadBalancerIP: 10.100.0.34

@@ -10,5 +10,6 @@ resources:
 - pvc.yaml
 - configmap.yaml
 - hacs-setup.yaml
+- service.yaml
 - deployment.yaml
-# - ingressroute.yaml
+- ingressroute.yaml

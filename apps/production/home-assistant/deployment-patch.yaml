@@ -10,25 +10,11 @@ spec:
       containers:
         - name: ha-ssh-access
           image: openssh-server
-          env:
-          - name: PUID
-            value: "1000"
-          - name: PGID
-            value: "1000"
-          - name: TZ
-            value: "Europe/Amsterdam"
-          - name: USER_NAME
-            value: "{{shell_user}}"
-          - name: USER_PASSWORD
-            value: "{{shell_password}}"
-          - name: PASSWORD_ACCESS
-            value: "false"
-          - name: SUDO_ACCESS
-            value: "true"
-          - name: PUBLIC_KEY_URL
-            value: "${PUBLIC_KEY_URL}"
+          envFrom:
+            - secretRef:
+                name: homeassistant-conf
         - name: homeassistant
           image: home-assistant
-          env:
-            - name: TZ
-              value: Europe/Amsterdam
+          envFrom:
+            - secretRef:
+                name: homeassistant-conf

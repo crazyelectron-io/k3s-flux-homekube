@@ -14,9 +14,18 @@ patches:
   - path: ingressroute-patch.yaml
     target:
       kind: IngressRoute
+  - path: service-discovery-patch.yaml
+    target:
+      kind: Service
+  - path: service-ssh-patch.yaml
+    target:
+      kind: Service
+  - path: deployment-patch.yaml
+    target:
+      kind: Deployment
 images:
 - name: debian
-  newName: $HARBOR_REGISTRY}/debian
+  newName: ${HARBOR_REGISTRY}/debian
   newTag: 12.6-slim
 - name: openssh-server
   newTag: "1.0"
