@@ -11,4 +11,4 @@ resources:
 - configmap.yaml
 - hacs-setup.yaml
 - deployment.yaml
-- ingressroute.yaml
+# - ingressroute.yaml
