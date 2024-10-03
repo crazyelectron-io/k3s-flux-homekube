@@ -5,4 +5,4 @@ kind: ConfigMap
 metadata:
   name: alloy-env
 data:
-  LOKI_URL: "http://loki.${OBSERVABILITY_NAMESPACE}.svc.cluster.local:3100/loki/api/v1/push"
+  LOKI_URL: http://loki.${OBSERVABILITY_NAMESPACE}.svc.cluster.local:3100/loki/api/v1/push
