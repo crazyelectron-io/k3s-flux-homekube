@@ -19,7 +19,7 @@ spec:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: clusterconfig
+    - name: cluster-config
     - name: external-secrets
   postBuild:
     substituteFrom:
