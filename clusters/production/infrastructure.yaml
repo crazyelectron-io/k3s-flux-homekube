@@ -20,6 +20,7 @@ spec:
     name: flux-system
   dependsOn:
     - name: clusterconfig
+    - name: external-secrets
   postBuild:
     substituteFrom:
       - kind: ConfigMap
