@@ -6,4 +6,4 @@ kind: Kustomization
 namespace: logging
 resources:
 - ../../base/prometheus-longhorn
-- namespace.yaml
+# - namespace.yaml
