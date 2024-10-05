@@ -6,4 +6,4 @@ kind: Kustomization
 resources:
 - ./part-db
 # - ./cloudnative-pg
-# - ./home-assistant
+- ./home-assistant
