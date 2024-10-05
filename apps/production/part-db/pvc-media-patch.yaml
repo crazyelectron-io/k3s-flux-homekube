@@ -1,0 +1,10 @@
+# apps/base/part-db/pvc-media-patch.yaml
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: partdb-media
+spec:
+  resources:
+    requests:
+      storage: 500Mi

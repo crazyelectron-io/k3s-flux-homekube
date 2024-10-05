@@ -1,0 +1,9 @@
+# apps/base/part-db/smb-creds.sops.yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: smb-creds-partdb
+string:
+  username: partdb
+  password: nv9yJsvTW6uyTz8Mn9x

@@ -1,0 +1,12 @@
+# apps/base/part-db/pv-uploads-patch.yaml
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+  name: partdb-uploads
+spec:
+  csi:
+    volumeAttributes:
+      source: '//10.100.02/partdb'

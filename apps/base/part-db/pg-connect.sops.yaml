@@ -1,0 +1,8 @@
+# apps/base/part-db/pg-connect.sops.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+    name: pg-connect
+type: Opaque
+stringData:
+  DATABASE_URL: postgresql://PARTDB_USER:PARTDB_PASSWORD@$PARTDB_HOST:5432/partdb?charset=utf8

@@ -1,0 +1,33 @@
+# apps/production/part-db/kustomization.yaml
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+- pg-secrets.sops.yaml
+- pg-connect.sops.yaml
+- smb-creds.sops.yaml
+- ../../base/part-db
+patches:
+  - path: ingressroute-patch.yaml
+    target:
+      kind: IngressRoute
+  - path: pv-uploads-patch.sops.yaml
+    target:
+      kind: PersistentVolume
+  - path: pvc-media-patch.yaml
+    target:
+      kind: PersistentVolumeClaim
+      name: partdb-media
+  - path: postgres-patch.yaml
+    target:
+      kind: Cluster
+      name: partdb
+  - path: deployment-patch.yaml
+    target:
+      kind: Deployment
+images:
+- name: part-db1
+  newName: ${HARBOR_REGISTRY}/part-db1
+  newTag: v1.14.0

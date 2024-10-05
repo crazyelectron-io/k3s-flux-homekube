@@ -1,0 +1,10 @@
+# apps/base/part-db/postgres-patch.yaml
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: partdb
+spec:
+  bootstrap:
+    initdb:
+      owner: partdb
