@@ -12,6 +12,7 @@ spec:
     secretRef:
       name: sops-age
   interval: 10m0s
+  retryInterval: 1m0s
   path: ./apps/production
   prune: true
   sourceRef:
