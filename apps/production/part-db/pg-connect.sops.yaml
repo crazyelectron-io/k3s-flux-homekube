@@ -5,4 +5,24 @@ metadata:
     name: pg-connect
 type: Opaque
 stringData:
-  DATABASE_URL: postgresql://partdb_user:ygf1Cebc9Dwq3dfAz@$PARTDB_HOST:5432/partdb?charset=utf8
+    DATABASE_URL: ENC[AES256_GCM,data:ncD7VimiCTVyteAkfbDbQwZLGRX7zKZu67qmbe7ZnotSKa23dRHPoPhb6UrTFf5LlivRD8SdjbqrFxuvegqphkVAE4BVPxt9EPKiBeYE5Yg=,iv:dvIE+XGrfdYMDstzcqwJXDYBMCN61cFWKK1N49ZRNCQ=,tag:3qCCIa74vIOm59fwJ2saBA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age109fzapgarv59gpyu5tgmwgn7j3hwmfs0dhrz3lrqvjy046jxafnse30kvj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBRT1VWQVdScklTL3pCNDV1
+            RFZlQW1LdEwzTGhMSjZEQVRMT3dmK2RnRlFBCmZhamg2NGwxVzhzY09EZGdrYTlB
+            UHNhUmRhNU1ObVQyZlNjTXBYK3dMNXcKLS0tIDg5R3E3SXJ6cFpFa3cwa3BaU3pU
+            S3I4cjIwU3F3d1cxOGp3RGplQWF3SEEKBPfheyqxQrDg4Z60T37WGO3Ru3lQ6Jx6
+            0Mo4qPN8tpobuqbtDa+fF8990IT0KbtsvdTOyKzKCB8n/V1Bp8dhsg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-10-05T15:36:15Z"
+    mac: ENC[AES256_GCM,data:h/Nx/fCXzj+iMsyNHjUQKGJIUWCUG/2e/n4Dav+R33nxp89CAqCxDhfZR/09VZZr3a+npHBr8gs4I4hNI8kBVsaGL6Hdwe8TM4UDrfd9RMkMw3QgWNsXDjWb7AREVGD0HFEvueNfA8JQhPF1enKQ72mXzAQ4kAVKenB5WgZHkCc=,iv:b/Jwzp/0328LPFiOr3gwjVK/GOFavRjN30EX5s8YDbY=,tag:yOmdilphi4hScmOwYSbp1w==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.9.0

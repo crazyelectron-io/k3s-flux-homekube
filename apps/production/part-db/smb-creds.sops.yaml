@@ -1,9 +1,28 @@
 # apps/base/part-db/smb-creds.sops.yaml
----
 apiVersion: v1
 kind: Secret
 metadata:
     name: smb-creds-partdb
 string:
-  username: partdb
-  password: nv9yJsvTW6uyTz8Mn9x
+    username: partdb
+    password: nv9yJsvTW6uyTz8Mn9x
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age109fzapgarv59gpyu5tgmwgn7j3hwmfs0dhrz3lrqvjy046jxafnse30kvj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBOVklVY2F0REJXRHhML25F
+            MWdJc3FuNUR6eFNvR3JNcnhvYWQ2NTFycVMwCkp1NVBoWlM1dEVpL0dXVEsvbzF1
+            ZTBHUW9FUkVPd2dPL1BQbE5RdXhqUjgKLS0tIFlibmw5NkNBem1EdWdSNWIwUWRZ
+            eVJyanNsZlJmTE1SYlJvSDB3YW5MYVEK2hQm9Cvam4cEVrvmLUohjbj7ogy3uaF5
+            zbgTJT/8nLtZckalkl1bkB3eksiNK4qnCLYrNj9ECpJeGB3Boaeoew==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-10-05T15:37:00Z"
+    mac: ENC[AES256_GCM,data:/4hFhNxx/f+rju9z8BSHvPUXnBgefaxLH4G8nM6wb8s9CB+U+cSjEMa9AATRgVBhdMk8xLld4Zx+s0L/R5+9e4C1wZoRwt0zoHFSrt0OdpOB/W6c0tABuO9X9sND01DHC/oW6b2ytaSdliqbLQ6HTRxpf520+p5tsYaQTj+ke9U=,iv:Cmwiw48Yi1thwIfd1rill5LD/QBZ8VbOefqyh7fcbMA=,tag:0fZdl62A31yDiZDspoi55A==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.9.0
