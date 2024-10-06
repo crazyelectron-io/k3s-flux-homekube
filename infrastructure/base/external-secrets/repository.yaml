@@ -1,9 +1,0 @@
-# infrastructure/base/external-secrets/repository.yaml
----
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
-metadata:
-  name: external-secrets
-spec:
-  url: https://charts.external-secrets.io
-  type: default

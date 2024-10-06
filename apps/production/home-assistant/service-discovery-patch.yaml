@@ -1,8 +1,0 @@
-# apps/production/home-assistant/service-discovery-patch.yaml
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: homeassistant-discovery
-spec:
-  loadBalancerIP: 10.100.0.30

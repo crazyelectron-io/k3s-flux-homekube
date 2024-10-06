@@ -1,6 +1,0 @@
-# infrastructure/base/prometheus-longhorn/namespace.yaml
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: ${OBSERVABILITY_NAMESPACE}
