@@ -1,0 +1,87 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &app mosquitto
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: *app
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: *app
+        type: primary
+    spec:
+      containers:
+        - image: eclipse-mosquitto:2.0.20
+          name: *app
+          ports:
+            - containerPort: 1883
+            - containerPort: 9001
+          command:
+            - *app
+          args:
+            - -c
+            - /mosquitto-no-auth.conf
+          resources: {}
+      securityContext:
+        runAsUser: 1883
+        runAsGroup: 1883
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - *app
+            topologyKey: kubernetes.io/hostname
+---
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: mosquitto-b
+      spec:
+        selector:
+          matchLabels:
+            app.kubernetes.io/name: &app mosquitto
+        template:
+          metadata:
+            labels:
+              app.kubernetes.io/name: *app
+              type: bridge
+          spec:
+            affinity:
+              podAntiAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                      - *app
+                  topologyKey: kubernetes.io/hostname
+            containers:
+            - args:
+              - -c
+              - /mosquitto/config/mosquitto.conf
+              command:
+              - *app
+              image: eclipse-mosquitto:2.0.20
+              name: *app
+              ports:
+              - containerPort: 1883
+              - containerPort: 9001
+              volumeMounts:
+              - mountPath: /mosquitto/config
+                name: config
+              resources: {}
+            securityContext:
+              runAsGroup: 1883
+              runAsUser: 1883
+            volumes:
+            - configMap:
+                name: bridge-conf
+              name: config

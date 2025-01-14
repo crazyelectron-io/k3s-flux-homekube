@@ -1,0 +1,57 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app longhorn
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: longhorn
+      version: 1.7.2
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+     # notes: See https://github.com/longhorn/longhorn/blob/master/chart/values.yaml
+    service:
+      ui:
+        type: LoadBalancer
+    persistence:
+      defaultClass: "true"
+      defaultFsType: "ext4"
+      defaultClassReplicaCount: "3"
+      defaultDataLocality: "best-effort"
+      reclaimPolicy: Delete
+      # defaultNodeSelector:
+      #  enable: true
+      #  # Node selector for the default Longhorn StorageClass. Longhorn uses only nodes with the specified tags for storing volume data. (Examples: "storage,fast")
+      #  selector: ""
+    defaultSettings:
+      backupTarget: "nfs://${CONFIG_NFS_SERVER_IP_ADDRESS}:/backup"
+      defaultDataPath: "/var/lib/longhorn"
+      defaultDataLocality: "best-effort"
+      storageMinimalAvailablePercentage: 10
+      storageReservedPercentageForDefaultDisk: 10
+      defaultReplicaCount: "3"
+      createDefaultDiskOnLabeledNodes: "true"
+      replicaNodeLevelSoftAntiAffinity: "true"
+      detachManuallyAttachedVolumesWhenCordoned: "true"
+      disableRevisionCounter: "true"
+      replicaAutoBalance: "least-effort"
+      podDeletionPolicyWhenNodeIsDown: "delete-deployment-pod"
+      orphanAutoDeletion: "true"
+    longhornUI:
+      replicas: 2
+    annotations:
+      prometheus.io/scrape: "true"

@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - ./rbac.yaml
+  - ./deployment.yaml
+  - ./service.yaml
+  - ./ingressroute.yaml
+configMapGenerator:
+  - name: homepage
+    files:
+      - ./conf/kubernetes.yaml
+      - ./conf/settings.yaml
+      - ./conf/custom.css
+      - ./conf/custom.js
+      - ./conf/bookmarks.yaml
+      - ./conf/services.yaml
+      - ./conf/widgets.yaml
+      - ./conf/docker.yaml
+generatorOptions:
+  disableNameSuffixHash: true

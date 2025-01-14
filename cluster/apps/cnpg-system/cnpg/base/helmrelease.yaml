@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app cloudnative-pg
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: *app
+      version: 0.23.0
+      sourceRef:
+        kind: HelmRepository
+        name: cloudnative-pg-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    replicaCount: 3
+    crds:
+      create: true
+    # -- Operator configuration
+    config:
+      create: true
+      name: cnpg-controller-manager-config
+      secret: false
+      # -- The content of the configmap/secret, for all available options see
+      # https://cloudnative-pg.io/documentation/current/operator_conf/#available-options
+      data:
+        INHERITED_LABELS: environment, workload, app
+      # WATCH_NAMESPACE: namespace-a,namespace-b
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    monitoring:
+      podMonitorEnabled: false
+    grafanaDashboard:
+      create: false

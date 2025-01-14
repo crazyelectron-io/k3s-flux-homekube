@@ -1,0 +1,317 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app harbor
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: harbor
+      version: 1.7.2
+      sourceRef:
+        kind: HelmRepository
+        name: harbor-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    expose:
+      type: ingress
+      tls:
+        enabled: false
+      ingress:
+        hosts:
+          core: registry.${SECRET_DOMAIN_0}
+        controller: default
+        annotations:
+          cert-manager.io/cluster-issuer: "${SECRET_DOMAIN_0}-prod"
+          ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        labels: {}
+      clusterIP:
+        name: harbor
+        staticClusterIP: ""
+        ports:
+          httpPort: 80
+          httpsPort: 443
+      nodePort:
+        name: harbor
+        ports:
+          http:
+            port: 80
+            nodePort: 30002
+          https:
+            port: 443
+            nodePort: 30003
+      loadBalancer:
+        name: harbor
+        IP: ""
+        ports:
+          httpPort: 80
+          httpsPort: 443
+    externalURL: https://registry.${SECRET_DOMAIN_0}
+    persistence:
+      enabled: true
+      resourcePolicy: "keep"
+      persistentVolumeClaim:
+        registry:
+          existingClaim: ""
+          storageClass: longhorn
+          subPath: ""
+          accessMode: ReadWriteOnce
+          size: 120Gi
+          annotations: {}
+        jobservice:
+          jobLog:
+            existingClaim: ""
+            storageClass: longhorn
+            subPath: ""
+            accessMode: ReadWriteOnce
+            size: 1Gi
+            annotations: {}
+        # If external database is used, the following settings for database will
+        # be ignored
+        database:
+          existingClaim: ""
+          storageClass: longhorn
+          subPath: ""
+          accessMode: ReadWriteOnce
+          size: 1Gi
+          annotations: {}
+        # If external Redis is used, the following settings for Redis will
+        # be ignored
+        redis:
+          existingClaim: ""
+          storageClass: longhorn
+          subPath: ""
+          accessMode: ReadWriteOnce
+          size: 1Gi
+          annotations: {}
+        trivy:
+          existingClaim: ""
+          storageClass: longhorn
+          subPath: ""
+          accessMode: ReadWriteOnce
+          size: 5Gi
+          annotations: {}
+      imageChartStorage:
+        disableredirect: false
+        type: filesystem
+        filesystem:
+          rootdirectory: /storage
+    # existingSecretAdminPassword: harbor-admin
+    # existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
+    harborAdminPassword: Harbor12345
+    internalTLS:
+      enabled: false
+    ipFamily:
+      ipv6:
+        enabled: true
+      ipv4:
+        enabled: true
+    imagePullPolicy: IfNotPresent
+    imagePullSecrets:
+    updateStrategy:
+      type: RollingUpdate
+    logLevel: info
+    metrics:
+      enabled: true
+      core:
+        path: /metrics
+        port: 8001
+      registry:
+        path: /metrics
+        port: 8001
+      jobservice:
+        path: /metrics
+        port: 8001
+      exporter:
+        path: /metrics
+        port: 8001
+      serviceMonitor:
+        enabled: false
+    trace:
+      enabled: false
+    cache:
+      enabled: false
+    # If service exposed via "ingress", the Nginx will not be used
+    nginx:
+      image:
+        repository: goharbor/nginx-photon
+        # tag: dev
+      automountServiceAccountToken: false
+      replicas: 1
+      revisionHistoryLimit: 10
+      # resources:
+      #  requests:
+      #    memory: 256Mi
+      #    cpu: 100m
+      nodeSelector: {}
+      # Spread Pods across failure-domains like regions, availability zones or nodes
+      topologySpreadConstraints: []
+      # - maxSkew: 1
+      #   topologyKey: topology.kubernetes.io/zone
+      #   nodeTaintsPolicy: Honor
+      #   whenUnsatisfiable: DoNotSchedule
+    portal:
+      image:
+        repository: goharbor/harbor-portal
+        # tag: dev
+      replicas: 1
+      revisionHistoryLimit: 10
+      # resources:
+      #  requests:
+      #    memory: 256Mi
+      #    cpu: 100m
+    core:
+      image:
+        repository: goharbor/harbor-core
+        # tag: dev
+      replicas: 1
+      revisionHistoryLimit: 10
+      startupProbe:
+        enabled: true
+        initialDelaySeconds: 10
+      # resources:
+      #  requests:
+      #    memory: 256Mi
+      #    cpu: 100m
+      quotaUpdateProvider: db # Or redis
+    jobservice:
+      image:
+        repository: goharbor/harbor-jobservice
+        # tag: dev
+      replicas: 1
+      revisionHistoryLimit: 10
+      # resources:
+      #   requests:
+      #     memory: 256Mi
+      #     cpu: 100m
+      maxJobWorkers: 10
+      jobLoggers:
+        - file
+        # - database
+        # - stdout
+      loggerSweeperDuration: 14 #days
+      notification:
+        webhook_job_max_retry: 3
+        webhook_job_http_client_timeout: 3 # in seconds
+      reaper:
+        # the max time to wait for a task to finish, if unfinished after max_update_hours, the task will be mark as error, but the task will continue to run, default value is 24
+        max_update_hours: 24
+        # the max time for execution in running state without new task created
+        max_dangling_hours: 168
+    registry:
+      registry:
+        image:
+          repository: goharbor/registry-photon
+          # tag: dev
+        # resources:
+        #  requests:
+        #    memory: 256Mi
+        #    cpu: 100m
+        extraEnvVars: []
+      controller:
+        image:
+          repository: goharbor/harbor-registryctl
+          # tag: dev
+        # resources:
+        #  requests:
+        #    memory: 256Mi
+        #    cpu: 100m
+      existingSecretKey: REGISTRY_HTTP_SECRET
+      relativeurls: false
+      middleware:
+        enabled: false
+      upload_purging:
+        enabled: true
+        # remove files in _upload directories which exist for a period of time, default is one week.
+        age: 168h
+        # the interval of the purge operations
+        interval: 24h
+        dryrun: false
+    trivy:
+      enabled: true
+      image:
+        repository: goharbor/trivy-adapter-photon
+        # tag: dev
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 1
+          memory: 1Gi
+      debugMode: false
+      # vulnType a comma-separated list of vulnerability types. Possible values are `os` and `library`.
+      vulnType: "os,library"
+      # severity a comma-separated list of severities to be checked
+      severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+      # ignoreUnfixed the flag to display only fixed vulnerabilities
+      ignoreUnfixed: false
+      # insecure the flag to skip verifying registry certificate
+      insecure: false
+      # Comma-separated list of what security issues to detect. Possible values are `vuln`, `config` and `secret`. Defaults to `vuln`.
+      securityCheck: "vuln"
+    database:
+      type: internal
+      internal:
+        image:
+          repository: goharbor/harbor-db
+          # tag: dev
+        # resources:
+        #  requests:
+        #    memory: 256Mi
+        #    cpu: 100m
+        livenessProbe:
+          timeoutSeconds: 2
+        readinessProbe:
+          timeoutSeconds: 2
+        # The initial superuser password for internal database
+        password: "fietsbelletje"
+        # The size limit for Shared memory, pgSQL use it for shared_buffer
+        # https://github.com/goharbor/harbor/issues/15034
+        shmSizeLimit: 512Mi
+        initContainer:
+          migrator: {}
+          # resources:
+          #  requests:
+          #    memory: 128Mi
+          #    cpu: 100m
+          permissions: {}
+          # resources:
+          #  requests:
+          #    memory: 128Mi
+          #    cpu: 100m
+    redis:
+      type: internal
+      internal:
+        image:
+          repository: goharbor/redis-photon
+          # tag: dev
+        # resources:
+        #  requests:
+        #    memory: 256Mi
+        #    cpu: 100m
+    exporter:
+      image:
+        repository: goharbor/harbor-exporter
+        # tag: dev
+      replicas: 1
+      revisionHistoryLimit: 10
+      # resources:
+      #  requests:
+      #    memory: 256Mi
+      #    cpu: 100m
+    # Don't setup Notary
+    notary:
+      enabled: false

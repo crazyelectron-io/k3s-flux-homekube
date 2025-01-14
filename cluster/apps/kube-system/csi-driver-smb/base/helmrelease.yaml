@@ -1,0 +1,62 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app csi-driver-smb
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: *app
+      version: 1.16.0
+      sourceRef:
+        kind: HelmRepository
+        name: csi-driver-smb-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    image:
+      baseRepo: registry.k8s.io/sig-storage
+      smb:
+        repository: /smbplugin
+        tag: v1.16.0
+        pullPolicy: IfNotPresent
+      csiProvisioner:
+        repository: /csi-provisioner
+        tag: v5.1.0
+        pullPolicy: IfNotPresent
+      livenessProbe:
+        repository: /livenessprobe
+        tag: v2.14.0
+        pullPolicy: IfNotPresent
+      nodeDriverRegistrar:
+        repository: /csi-node-driver-registrar
+        tag: v2.12.0
+        pullPolicy: IfNotPresent
+      csiproxy:
+        repository: ghcr.io/kubernetes-sigs/sig-windows/csi-proxy
+        tag: v1.1.2
+        pullPolicy: IfNotPresent
+    feature:
+      enableGetVolumeStats: true
+    controller:
+      dnsPolicy: ClusterFirstWithHostNet  # available values: Default, ClusterFirstWithHostNet, ClusterFirst
+      runOnControlPlane: true
+      tolerations:
+        - key: "node-role.kubernetes.io/master"
+          operator: "Exists"
+          effect: "NoSchedule"
+        - key: "node-role.kubernetes.io/controlplane"
+          operator: "Exists"
+          effect: "NoSchedule"
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
+          effect: "NoSchedule"

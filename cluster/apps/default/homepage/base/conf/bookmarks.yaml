@@ -1,0 +1,42 @@
+- Developer:
+    - Github:
+        - abbr: GH
+          description: My GitHub Repository
+          icon: github.png
+          href: https://github.com/
+    - Microsft Azure:
+        - abbr: AZ
+          description: Microsoft Azure Portal
+          icon: azure.png
+          href: https://portal.azure.com/
+    - Microsft 365:
+        - abbr: M3
+          description: Microsoft 365 Admin Portal
+          icon: office.png
+          href: https://admin.microsoft.com/
+- Network:
+    - UDMPro:
+        - abbr: UM
+          icon: unifi.png
+          description: Unifi UDMPro Gateway
+          href: https://shelob.moerman.online
+    - CloudFlare:
+        - abbr: CF
+          description: Cloudflare public domain configurations
+          icon: cloudflare.png
+          href: https://dash.cloudflare.com/
+    - Wazuh:
+        - abbr: WZ
+          description: Network SIEM en IDS/IPS
+          icon: network.png
+          href: https://wazuh.moerman.online/
+    - HomeNAS:
+        - abbr: HN
+          description: NAS for cluster storage and backup
+          icon: nas.png
+          href: http://10.100.0.2:8080
+    - Prometheus:
+        - abbr: PM
+          description: Prometheus metrics collector
+          icon: prometheus.png
+          href: https://prometheus.moerman.online/

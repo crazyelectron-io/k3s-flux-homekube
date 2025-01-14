@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: harbor-system
+resources:
+  - ./cluster.yaml
+secretGenerator:
+  - name: harbor-cnpg-user-secret
+    literals:
+      - username=${SECRET_HARBOR_PG_USER}
+      - password=${SECRET_HARBOR_PG_PASSWORD}
+    type: 'kubernetes.io/basic-auth'
+generatorOptions:
+  disableNameSuffixHash: true

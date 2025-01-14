@@ -1,0 +1,109 @@
+- My Home:
+    - Home Assistant:
+        href: https://ha.moerman.online/
+        icon: home-assistant.png
+        description: Home Assistant home automation
+        siteMonitor: https://ha.moerman.online/
+    - OpenHAB:
+        href: https://oh.moerman.online
+        icon: openhab.png
+        description: OpenHAB home automation
+        siteMonitor: https://oh.moerman.online
+- My Media:
+    - Plex TV:
+        icon: plex.png
+        description: Kijk Films & Series
+        href: http://10.0.0.8:32400
+        widget:
+          type: plex
+          url: http://10.0.0.8:32400
+          fields: ["streams", "movies", "tv"]
+          key: "{{plex_server_token}}"
+    - Media Aanvrager:
+          description: Zoek en vraag Films & Series
+          href: https://media.moerman.online
+          icon: overseerr.png
+          widget:
+            type: overseerr
+            url: http://overseerr-svc.media.svc.cluster.local:80
+            key: "${SECET_OVERSEERR_API_KEY}"
+    - Film Collector:
+        href: https://media.moerman.online/radarr/
+        description: Verzamel en download Films
+        icon: radarr.png
+        widget:
+          type: radarr
+          url: http://radarr-svc.media.svc.cluster.local:80
+          key: "${SECRET_RADARR_API_KEY}"
+    - TV Series Collector:
+        icon: sonarr.png
+        description: Verzamel en download Series
+        href: https://media.moerman.online/sonarr
+        widget:
+          type: sonarr
+          url: http://sonarr-svc.media.svc.cluster.local
+          key: "${SECRET_SONARR_API_KEY}"
+    - Book Collector:
+        icon: readarr.png
+        description: Verzamel en download e-books
+        href: https://media.moerman.online/readarr
+        widget:
+          type: readarr
+          url: http://readarr-svc.media.svc.cluster.local
+          key: "${SECRET_READARR_API_KEY}"
+    - Ondertiteling Collector:
+        icon: bazarr.png
+        description: Zoek en download ondertiteling
+        href: https://media.moerman.online/bazarr
+        widget:
+          type: bazarr
+          url: http://bazarr-svc.media.svc.cluster.local:80/bazarr
+          key: "${SECRET_BAZARR_API_KEY}"
+    - Usenet Downloader:
+        description: Download Usenet files
+        icon: sabnzbd.png
+        href: https://media.moerman.online/sabnzbd
+        widget:
+          type: sabnzbd
+          url: http://sabnzbd-svc.media.svc.cluster.local:80
+          key: "${SECRET_SABNZBD_API_KEY}"
+    - Torrents Downloader:
+        description: Download Tirrent files
+        icon: qbittorrent.png
+        href: https://torrent.moerman.online
+        widget:
+          type: qbittorrent
+          url: http://qbt-svc.media.svc.cluster.local:80
+          username: "${SECRET_QBITTORRENT_USERNAME}"
+          password: "${SECRET_QBITTORRENT_PASSWORD}"
+- My Cluster:
+    - Rancher:
+        href: https://rancher.moerman.online/
+        description: Rancher Kubernetes management portal
+        icon: rancher.png
+        siteMonitor: https://rancher.moerman.online/
+    - Grafana:
+        icon: grafana.png
+        description: Grafana Dashboards
+        href: https://grafana.moerman.online
+        siteMonitor: https://grafana.moerman.online
+    - Harbor:
+        icon: harbor.png
+        description: Registry voor image repositories
+        href: https://registry.moerman.online
+        siteMonitor: https://registry.moerman.online/
+    - Longhorn Cluster storage:
+        icon: longhorn.png
+        description: Longhorn cluster storage
+        href: http://10.100.0.20
+        siteMonitor: http://10.100.0.20
+    - Authentik:
+        icon: authentik.png
+        description: Authentik secure authentication
+        href: https://auth.moerman.online
+        siteMonitor: https://auth.moerman.online
+    - Traefik:
+        icon: traefik.png
+        description: Traefik Dashboard
+        href: https://traefik.moerman.online
+        siteMonitor: https://traefik.moerman.online/

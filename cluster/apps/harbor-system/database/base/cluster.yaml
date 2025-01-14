@@ -1,0 +1,27 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: harbor-cluster
+spec:
+  description: "PostgreSQL Harbor DB"
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
+  instances: 2
+  bootstrap:
+    initdb:
+      database: harbor_db
+      owner: ${SECRET_HARBOR_PG_USER}
+      secret:
+        name: harbor-cnpg-user-secret
+  storage:
+    storageClass: longhorn
+    size: 200Gi
+  resources:
+    requests:
+      memory: 500Mi
+      cpu: 300m
+    limits:
+      memory: 1Gi
+      cpu: 1
+  monitoring:
+    enablePodMonitor: true
