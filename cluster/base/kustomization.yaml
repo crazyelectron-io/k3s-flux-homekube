@@ -9,4 +9,5 @@ resources:
   - ./apps.yaml
   - ./media-source.yaml
   - ./media.yaml
-  # - ./home-assistant.yaml
+  - ./home-assistant-source.yaml
+  - ./home-assistant.yaml

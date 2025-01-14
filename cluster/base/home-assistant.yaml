@@ -1,17 +1,4 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: GitRepository
-metadata:
-  name: home-assistant
-  namespace: flux-system
-spec:
-  interval: 1m0s
-  url: ssh://git@github.com/crazyelectron-io/home-assistant
-  ref:
-    branch: main
-  secretRef:
-    name: home-assistant-git
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -23,7 +10,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  interval: 2m0s
+  interval: 5m0s
   path: ./home-assistant
   prune: true
   dependsOn:
@@ -31,7 +18,9 @@ spec:
   sourceRef:
     kind: GitRepository
     name: *app
-  targetNamespace: automation
+  # targetNamespace: automation
+  wait: true
+  timeout: 5m0s
   postBuild:
     substituteFrom:
       - kind: ConfigMap
