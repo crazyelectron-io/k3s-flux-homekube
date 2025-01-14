@@ -42,8 +42,10 @@ spec:
             substituteFrom:
               - kind: ConfigMap
                 name: cluster-vars
+                namespace: flux-system
               - kind: Secret
                 name: cluster-secret-vars
+                namespace: flux-system
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
