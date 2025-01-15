@@ -5,7 +5,7 @@ metadata:
   name: media
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 2m
   url: https://github.com/crazyelectron-io/k3s-flux-media
   ref:
     branch: main
