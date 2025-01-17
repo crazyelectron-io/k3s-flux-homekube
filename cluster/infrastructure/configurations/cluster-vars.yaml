@@ -6,7 +6,7 @@ metadata:
   name: cluster-vars
   namespace: flux-system
   annotations:
-    replicator.v1.mittwald.de/replicate-to: default,media,monitoring-system,harbor-system,traefik
+    replicator.v1.mittwald.de/replicate-to: default,media,monitoring-system,harbor-system,traefik,automation
 data:
   CONFIG_UDMPRO_IP_ADDRESS: 10.0.0.1
   CONFIG_NFS_SERVER_IP_ADDRESS: 10.100.0.2
