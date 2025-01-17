@@ -7,4 +7,3 @@ resources:
   - ./whisper/kustomization-fluxCRD.yaml
   - ./mosquitto/kustomization-fluxCRD.yaml
   - ./influxdb/kustomization-fluxCRD.yaml
-  - ./homeassistant/kustomization-fluxCRD.yaml
