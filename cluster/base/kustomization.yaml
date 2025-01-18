@@ -11,3 +11,5 @@ resources:
   - ./media.yaml
   - ./home-assistant-source.yaml
   - ./home-assistant.yaml
+  - openhab-source.yaml
+  - openhab.yaml
