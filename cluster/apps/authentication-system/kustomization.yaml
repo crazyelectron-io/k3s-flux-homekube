@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - database/kustomization-fluxCRD.yaml
-  # - authentik/kustomization-fluxCRD.yaml
+  - authentik/kustomization-fluxCRD.yaml
