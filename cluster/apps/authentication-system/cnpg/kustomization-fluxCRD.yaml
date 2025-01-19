@@ -6,7 +6,7 @@ metadata:
   name: authentication-system-database
   namespace: flux-system
 spec:
-  path: ./cluster/apps/authentication-system/database/base
+  path: ./cluster/apps/authentication-system/cnpg/base
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -15,4 +15,3 @@ spec:
   wait: true
   dependsOn:
     - name: cnpg-system-cnpg
-    
