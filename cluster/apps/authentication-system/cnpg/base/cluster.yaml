@@ -10,7 +10,7 @@ spec:
   bootstrap:
     initdb:
       database: authentik_db
-      owner: ${SECRET_AUTHENTIKPG_USER}
+      owner: ${SECRET_AUTHENTIK_PG_USER}
       secret:
         name: authentik-cnpg-user-secret
   storage:
