@@ -9,12 +9,12 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 20.6.3
+      version: 3.6.1
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 15m
+      interval: 5m
   install:
     createNamespace: true
     remediation:
@@ -23,104 +23,83 @@ spec:
     remediation:
       retries: 5
   values:
-    namespaceOverride: ""
-    image:
-      registry: docker.io
-      repository: bitnami/redis
-      tag: 7.4.2-debian-12-r0
-    ## @param architecture Redis&reg; architecture. Allowed values: `standalone` or `replication`
-    architecture: replication
-    ## ref: https://github.com/bitnami/containers/tree/main/bitnami/redis#setting-the-server-password-on-first-run
-    auth:
-      usePassword: false
-      # usePasswordFiles: true
-      # existingSecret: redis-password-secret
-      # existingSecretPasswordKey: dis-password.yaml
-    commonConfiguration: |-
-      # Enable AOF https://redis.io/topics/persistence#append-only-file
-      appendonly yes
-      # Disable RDB persistence, AOF persistence already enabled.
-      save ""
-    existingConfigmap: ""
-    master:
-      revisionHistoryLimit: 10
-      ## ref: https://redis.io/topics/config
-      configuration: ""
-      containerPorts:
-        redis: 6379
-      livenessProbe:
-        enabled: true
-        initialDelaySeconds: 20
-        periodSeconds: 5
-        timeoutSeconds: 5
-        successThreshold: 1
-        failureThreshold: 5
-      readinessProbe:
-        enabled: true
-        initialDelaySeconds: 20
-        periodSeconds: 5
-        timeoutSeconds: 1
-        successThreshold: 1
-        failureThreshold: 5
-      resourcesPreset: "micro"
-      resources: {}
-      kind: StatefulSet
-      updateStrategy:
-        type: RollingUpdate
-      ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-      persistence:
-        size: 8Gi
-      service:
-        type: ClusterIP
-        portNames:
-          redis: "tcp-redis"
+    controllers:
+      redis:
+        type: statefulset
+        containers:
+          main:
+            image:
+              repository: redis
+              tag: 7.4.2-alpine
+            command:
+              - sh
+            args:
+              - -c
+              - >-
+                redis-server --requirepass $REDIS_PASSWORD
+            probes:
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - sh
+                      - -c
+                      - /health/ping_liveness.sh 5
+                  initialDelaySeconds: 5
+                  timeoutSeconds: 6
+                  periodSeconds: 5
+                  successThreshold: 1
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - sh
+                      - -c
+                      - /health/ping_readiness.sh 1
+                  initialDelaySeconds: 5
+                  timeoutSeconds: 2
+                  periodSeconds: 5
+                  successThreshold: 1
+                  failureThreshold: 5
+            resources:
+              requests:
+                cpu: 34m
+                memory: 204Mi
+              limits:
+                memory: 241Mi
+            env:
+              REDIS_PORT: "6379"
+              REDIS_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: redis-secret
+                    key: redis_password
+    service:
+      main:
+        controller: redis
         ports:
-          redis: 6379
-      terminationGracePeriodSeconds: 30
-    replica:
-      kind: StatefulSet
-      replicaCount: 3
-      revisionHistoryLimit: 10
-      configuration: ""
-      disableCommands:
-        - FLUSHDB
-        - FLUSHALL
-      containerPorts:
-        redis: 6379
-      startupProbe:
+          http:
+            port: 6379
+    persistence:
+      data:
         enabled: true
-        initialDelaySeconds: 10
-        periodSeconds: 10
-        timeoutSeconds: 5
-        successThreshold: 1
-        failureThreshold: 22
-      livenessProbe:
+        existingClaim: redis-data-redis-0
+        globalMounts:
+          - path: /data
+      healthcheck:
         enabled: true
-        initialDelaySeconds: 20
-        periodSeconds: 5
-        timeoutSeconds: 5
-        successThreshold: 1
-        failureThreshold: 5
-      readinessProbe:
-        enabled: true
-        initialDelaySeconds: 20
-        periodSeconds: 5
-        timeoutSeconds: 1
-        successThreshold: 1
-        failureThreshold: 5
-      resourcesPreset: "micro"
-      resources: {}
-      updateStrategy:
-        type: RollingUpdate
-      minReadySeconds: 0
-      persistence:
-        size: 8Gi
-      service:
-        type: ClusterIP
-        ports:
-          redis: 6379
-        externalTrafficPolicy: Cluster
-        internalTrafficPolicy: Cluster
-        clusterIP: ""
-        loadBalancerIP: ""
-      terminationGracePeriodSeconds: 30
+        type: configMap
+        name: redis-healthcheck
+        defaultMode: 0755
+        globalMounts:
+          - path: /health
