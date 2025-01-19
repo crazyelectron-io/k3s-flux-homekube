@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./database/kustomization-fluxCRD.yaml
-  # - ./harbor/kustomization-fluxCRD.yaml
+  - ./harbor/kustomization-fluxCRD.yaml
   # - ./post-deploy-job/kustomization-fluxCRD.yaml
 secretGenerator:
   - name: harbor-admin
