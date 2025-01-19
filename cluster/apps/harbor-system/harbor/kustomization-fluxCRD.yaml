@@ -32,4 +32,4 @@ spec:
   dependsOn:
     - name: traefik-traefik
     - name: longhorn-system-longhorn
-    - name: harbor-system-cloudnative-pg
+    - name: harbor-system-database
