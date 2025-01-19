@@ -7,5 +7,6 @@ resources:
   - secret.yaml
   - storage.yaml
   - helmrelease.yaml
+  - authentik-middleware.yaml
   - ingressroute.yaml
   
