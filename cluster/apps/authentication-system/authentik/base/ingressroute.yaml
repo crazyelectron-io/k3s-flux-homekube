@@ -9,7 +9,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: "Host(`auth${SECRET_DOMAIN_0}`)"
+    - match: "Host(`auth.${SECRET_DOMAIN_0}`)"
       kind: Rule
       services:
         - name: authentik-authserver
