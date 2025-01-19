@@ -12,4 +12,4 @@ resources:
   - ./home-assistant-source.yaml
   - ./home-assistant.yaml
   - openhab-source.yaml
-  - openhab.yaml
+  # - openhab.yaml
