@@ -14,4 +14,4 @@ resources:
   - ./prometheus-community-charts.yaml
   - ./rancher-charts.yaml
   - ./harbor-charts.yaml
-  - ./bjw-s-charts.yaml
+  - ./authentik-charts.yaml
