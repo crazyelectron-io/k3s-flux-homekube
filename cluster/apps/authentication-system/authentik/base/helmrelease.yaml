@@ -32,7 +32,7 @@ spec:
         fsGroup: 1000
     authentik:
       # -- Log level for server and worker
-      log_level: info
+      log_level: debug
       # -- Secret key used for cookie singing and unique user IDs, don't change this after the first install
       secret_key: ${SECRET_AUTHENTIK_SIGNING_KEY}
       error_reporting:
