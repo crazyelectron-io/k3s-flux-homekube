@@ -15,4 +15,3 @@ spec:
   wait: true
   dependsOn:
     - name: cnpg-system-cnpg
-    
