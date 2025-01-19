@@ -3,10 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: authentication-system-authelia
+  name: authentication-system-authentik
   namespace: flux-system
 spec:
-  path: ./cluster/apps/authentication-system/authelia/base
+  path: ./cluster/apps/authentication-system/authentik/base
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -14,6 +14,5 @@ spec:
   prune: true
   wait: true
   dependsOn:
-    - name: traefik-traefik
-    - name: default-postgrescluster
-    - name: default-redis
+    - name: authentication-system-database
+    

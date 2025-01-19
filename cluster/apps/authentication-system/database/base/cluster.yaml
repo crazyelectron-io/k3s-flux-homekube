@@ -2,17 +2,17 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: authelia-cluster
+  name: authentik-cluster
 spec:
-  description: "PostgreSQL Authelia DB"
+  description: "PostgreSQL Authentik DB"
   imageName: ghcr.io/cloudnative-pg/postgresql:16.4
   instances: 2
   bootstrap:
     initdb:
-      database: authelia_db
-      owner: ${SECRET_AUTHELIA_PG_USER}
+      database: authentik_db
+      owner: ${SECRET_AUTHENTIKPG_USER}
       secret:
-        name: authelia-cnpg-user-secret
+        name: authentik-cnpg-user-secret
   storage:
     storageClass: longhorn
     size: 1Gi
