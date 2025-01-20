@@ -7,7 +7,7 @@ spec:
   secretName: "${SECRET_DOMAIN_0//./-}-prod-tls"
   secretTemplate:
     annotations:
-      replicator.v1.mittwald.de/replicate-to: default,media,monitoring-system,flux-system,harbor-system,traefik
+      replicator.v1.mittwald.de/replicate-to: default,media,monitoring-system,flux-system,harbor-system,traefik,authentication-system
   issuerRef:
     name: ${SECRET_DOMAIN_0}-prod
     kind: ClusterIssuer
