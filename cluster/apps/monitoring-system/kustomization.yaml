@@ -8,4 +8,4 @@ resources:
   - ./alloy/kustomization-fluxCRD.yaml
   - ./prometheus-stack/kustomization-fluxCRD.yaml
   - grafana-cnpg/kustomization-fluxCRD.yaml
-  - grafana-kustomization.yaml
+  - grafana/kustomization-fluxCRD.yaml
