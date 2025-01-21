@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./loki/kustomization-fluxCRD.yaml
-  - ./alloy/kustomization-fluxCRD.yaml
+  # - ./alloy/kustomization-fluxCRD.yaml
   - ./prometheus-stack/kustomization-fluxCRD.yaml
