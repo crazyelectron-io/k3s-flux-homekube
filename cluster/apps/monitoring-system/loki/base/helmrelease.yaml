@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: *app
-      version: 6.24.0
+      version: 6.25.0
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
@@ -66,7 +66,8 @@ spec:
       #   repository: loki
       #   tag: "{{loki_image_tag}}"
       configStorageType: ConfigMap
-      configObjectName: loki-config
+      configObjectName: 'loki-config'
+      generatedConfigObjectName: ""
       datasource:
         jsonData: "{}"
         uid: ""
