@@ -16,4 +16,4 @@ datasources:
   url: http://loki.monitoring-system.svc.cluster.local:3100
 - name: Prometheus
   type: prometheus
-  url: http://prometheus-stack-kube-prom-prometheus.monitoring-system.svc.cluster.local
+  url: http://prometheus-stack-kube-prom-prometheus.monitoring-system.svc.cluster.local:8080
