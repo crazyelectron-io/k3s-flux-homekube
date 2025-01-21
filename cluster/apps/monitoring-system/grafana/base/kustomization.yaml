@@ -12,4 +12,6 @@ resources:
 configMapGenerator:
   - name: grafana-config
     files:
-      - grafana.ini=config/grafana.ini
+      - grafana.ini=grafana.ini
+    options:
+      disableNameSuffixHash: true
