@@ -13,6 +13,6 @@ spec:
       release: prometheus
   endpoints:
     - targetPort: 9100
-      # interval: 30s
-      # scrapeTimeout: 90s
+      interval: 30s
+      scrapeTimeout: 90s
       path: /metrics
