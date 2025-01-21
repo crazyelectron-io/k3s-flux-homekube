@@ -66,8 +66,8 @@ spec:
       #   repository: loki
       #   tag: "{{loki_image_tag}}"
       configStorageType: ConfigMap
-      configObjectName: 'loki-config'
-      generatedConfigObjectName: ""
+      # configObjectName: 'loki-config'
+      # generatedConfigObjectName: ""
       datasource:
         jsonData: "{}"
         uid: ""
