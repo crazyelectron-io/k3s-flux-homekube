@@ -1,0 +1,27 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: grafana-cluster
+spec:
+  description: "PostgreSQL Grafana DB"
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
+  instances: 2
+  bootstrap:
+    initdb:
+      database: grafana_db
+      owner: ${SECRET_GRAFANA_PG_USER}
+      secret:
+        name: grafana-cnpg-user-secret
+  storage:
+    storageClass: longhorn
+    size: 100Gi
+  resources:
+    requests:
+      memory: 500Mi
+      cpu: 300m
+    limits:
+      memory: 1Gi
+      cpu: 1
+  monitoring:
+    enablePodMonitor: true

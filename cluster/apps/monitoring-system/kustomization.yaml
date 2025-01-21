@@ -7,3 +7,5 @@ resources:
   - ./loki/kustomization-fluxCRD.yaml
   - ./alloy/kustomization-fluxCRD.yaml
   - ./prometheus-stack/kustomization-fluxCRD.yaml
+  - grafana-cnpg/kustomization-fluxCRD.yaml
+  - grafa-kustomization.yaml
