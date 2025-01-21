@@ -9,3 +9,5 @@ configMapGenerator:
   - name: loki-config
     files:
       - loki.yaml=config/loki.yaml
+    options:
+      disableNameSuffixHash: true
