@@ -4,22 +4,19 @@ metadata:
   name: &app grafana
   labels:
     app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
+    release: prometheus    
 spec:
   endpoints:
-  - port: http
-    interval: 1m
-    scrapeTimeout: 30s
+  - targetPort: 9100
+    interval: 30s
+    scrapeTimeout: 60s
     honorLabels: true
     path: /metrics
-    scheme: http
-    tlsConfig: {}
-    relabelings: []
-    metricRelabelings: []
   jobLabel: grafana
   selector:
     matchLabels:
-    app.kubernetes.io/name: *app
-  namespaceSelector:
-    matchNames:
-      - monitoring-system
+      app.kubernetes.io/name: *app
+      release: prometheus
+  # namespaceSelector:
+  #   matchNames:
+  #     - monitoring-system
