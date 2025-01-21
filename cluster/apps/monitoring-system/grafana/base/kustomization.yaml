@@ -12,6 +12,21 @@ resources:
 configMapGenerator:
   - name: grafana-config
     files:
-      - grafana.ini
+      - grafana.ini=./config/grafana.ini
+    options:
+      disableNameSuffixHash: true
+  - name: grafana-datasources
+    files:
+      - datasources.yaml=./config/datasources.yaml
+    options:
+      disableNameSuffixHash: true
+  - name: grafana-plugins
+    files:
+      - plugins.yaml=./config/plugins.yaml
+    options:
+      disableNameSuffixHash: true
+  - name: grafana-dashboards
+    files:
+      - dashboards.yaml=./config/dashboards.yaml
     options:
       disableNameSuffixHash: true
