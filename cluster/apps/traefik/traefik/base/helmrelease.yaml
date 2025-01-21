@@ -54,6 +54,7 @@ spec:
       access:
         enabled: false
     additionalArguments:
+      - "--metrics.prometheus=true"
       - "--serversTransport.insecureSkipVerify=true"
     # - "--providers.kubernetesingress.allowemptyservices=true"
     # - "--providers.kubernetesingress.allowexternalnameservices=true"
