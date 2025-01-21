@@ -3,25 +3,6 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: monitoring-system-loki-config
-  namespace: flux-system
-spec:
-  path: ./cluster/apps/monitoring-system/loki/config
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  interval: 30m
-  timeout: 2m
-  retryInterval: 2m30s
-  prune: true
-  wait: true
-  dependsOn:
-    - name: longhorn-system-longhorn
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: monitoring-system-loki
   namespace: flux-system
 spec:
@@ -29,10 +10,8 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  interval: 30m
+  interval: 5m
   timeout: 2m
   retryInterval: 2m30s
   prune: true
   wait: true
-  dependsOn:
-    - name: monitoring-system-loki-config

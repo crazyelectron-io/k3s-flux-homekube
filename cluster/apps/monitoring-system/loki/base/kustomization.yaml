@@ -5,3 +5,7 @@ kind: Kustomization
 namespace: monitoring-system
 resources:
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: loki-config
+    files:
+      - loki.yaml=config/loki.yaml

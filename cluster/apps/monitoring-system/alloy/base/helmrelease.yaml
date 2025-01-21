@@ -23,6 +23,11 @@ spec:
     remediation:
       retries: 5
   values:
+    global:
+      podScecurityContext:
+        sysctls:
+          - name: fs.inotify.max_user_watches
+            value: "2099999999"
     crds:
       create: true
     alloy:
