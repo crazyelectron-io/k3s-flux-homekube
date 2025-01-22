@@ -35,6 +35,6 @@ spec:
       nameservers:
         - 1.1.1.1
     prometheus:
-      enabled: false
+      enabled: true
       servicemonitor:
-        enabled: false
+        enabled: true
