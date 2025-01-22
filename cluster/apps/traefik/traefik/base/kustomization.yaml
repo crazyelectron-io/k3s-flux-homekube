@@ -5,6 +5,5 @@ kind: Kustomization
 namespace: traefik
 resources:
   - helmrelease.yaml
-  - podmonitor.yaml
   - service.yaml
   - metrics.yaml

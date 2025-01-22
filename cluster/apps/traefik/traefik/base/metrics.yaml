@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: traefik
   labels:
-    app.kubernetes.io/name: traefik-dashboard
+    app.kubernetes.io/name: traefik-metrics
 spec:
   endpoints:
     - targetPort: 9100
@@ -14,5 +14,5 @@ spec:
       - traefik
   selector:
     matchLabels:
-      app.kubernetes.io/name: traefik-dashboard
+      app.kubernetes.io/name: traefik-metrics
       release: prometheus
