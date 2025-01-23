@@ -4,16 +4,15 @@ kind: Service
 metadata:
   name: flux-metrics
   labels:
-    # app.kubernetes.io/instance: source-controller
-    app.kubernetes.io/name: flux-metrics
+    app.kubernetes.io/instance: source-controller
+    app.kubernetes.io/name: source-controller-metrics
     release: prometheus
 spec:
   type: ClusterIP
   ports:
-    - name: flux-metrics
+    - name: source-controller-metrics
       port: 8080
       targetPort: http-prom
       protocol: TCP
   selector:
-    # app.kubernetes.io/instance: traefik-traefik
     name: source-controller
