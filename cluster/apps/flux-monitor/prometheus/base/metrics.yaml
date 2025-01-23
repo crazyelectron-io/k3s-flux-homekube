@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: flux-metrics
+  labels:
+    app.kubernetes.io/name: source-controller
+spec:
+  endpoints:
+    - port: flux-metrics
+      interval: 30s
+      path: /metrics
+  namespaceSelector:
+    matchNames:
+      - flux-system
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: source-controller
+      release: prometheus
