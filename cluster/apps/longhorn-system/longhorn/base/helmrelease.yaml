@@ -55,3 +55,6 @@ spec:
       replicas: 2
     annotations:
       prometheus.io/scrape: "true"
+    metrics:
+      serviceMonitor:
+        enabled: "true"
