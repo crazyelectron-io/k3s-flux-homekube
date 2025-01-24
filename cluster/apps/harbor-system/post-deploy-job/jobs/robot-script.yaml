@@ -23,10 +23,10 @@ data:
     TOKEN=$(curl -s -u "$USERNAME:$PASSWORD" "$HARBOR_URL/api/v2.0/users/current" | jq -r '.token')
 
     # Check if robot account already exists
-    EXISTING_ROBOT=$(curl -s -H "Authorization: Bearer $TOKEN" "$HARBOR_URL/api/v2.0/robots" | grep -oP '(?<="name":")'$ROassistant'(?=")')
-    if [ "$EXISTING_ROBOT" == "$ROassistant" ]; then
-      echo "Robot account '$ROassistant' already exists."
-    else
+    #EXISTING_ROBOT=$(curl -s -H "Authorization: Bearer $TOKEN" "$HARBOR_URL/api/v2.0/robots" | grep -oP '(?<="name":")'$ROassistant'(?=")')
+    #if [ "$EXISTING_ROBOT" == "$ROassistant" ]; then
+    #  echo "Robot account '$ROassistant' already exists."
+    #else
       # Create robot account
       ROBOT_RESPONSE=$(curl -s -X POST "$HARBOR_URL/api/v2.0/robots" \
         -H "Authorization: Bearer $TOKEN" \
@@ -82,7 +82,7 @@ data:
       # Output robot account details
       echo "Robot Account: $ROBOT_ACCOUNT"
       echo "Robot Secret: $ROBOT_SECRET"
-    fi
+    #fi
 
     # }' "https://registry.${SECRET_DOMAIN_0}/api/v2.0/robots" -w "%{http_code}" -o /dev/null -s | grep -E "201|409"
 
