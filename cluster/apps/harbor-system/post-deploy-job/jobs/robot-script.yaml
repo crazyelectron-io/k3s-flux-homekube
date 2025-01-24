@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: robot-script-configmap
+data:
+  robot-account.sh: |
+    #!/bin/bash
+
+    # Variables
+    HARBOR_URL="https://registry.${SECRWET_DOMAIN_0}"
+    USERNAME="${SECRET_HARBOR_ADMIN_USER}"
+    PASSWORD="${SECRET_HARBOR_ADMIN_PASSWORD}"
+    ROBOT_NAME="automation"
+    ROBOT_DESCRIPTION=Robot account for Automation"
+
+    echo ".......... Creating Harbor Robot Account ............"
+
+    # Get Harbor API token
+    TOKEN=$(curl -s -u "$USERNAME:$PASSWORD" "$HARBOR_URL/api/v2.0/users/current" | jq -r '.token')
+
+    # Check if robot account already exists
+    EXISTING_ROBOT=$(curl -s -H "Authorization: Bearer $TOKEN" "$HARBOR_URL/api/v2.0/robots" | grep -oP '(?<="name":")'$ROassistant'(?=")')
+    if [ "$EXISTING_ROBOT" == "$ROassistant" ]; then
+      echo "Robot account '$ROassistant' already exists."
+    else
+      # Create robot account
+      ROBOT_RESPONSE=$(curl -s -X POST "$HARBOR_URL/api/v2.0/robots" \
+        -H "Authorization: Bearer $TOKEN" \
+        -H "Content-Type: application/json" \
+        -d '{
+          "name": "'$ROBOT_NAME'",
+          "description": "'$ROBOT_DESCRIPTION'",
+          "duration": 300,
+          "level": "project",
+          "permissions": [
+            {
+              "kind": "project",
+              "namespace": "'$PROJECT_NAME'",
+              "access": [
+                {
+                  "action": "pull",
+                  "resource": "repository"
+                },
+                {
+                  "action": "push",
+                  "resource": "repository"
+                },
+                {
+                  "action": "create",
+                  "resource": "tag"
+                },
+                {
+                  "action": "delete",
+                  "resource": "tag"
+                },
+                {
+                  "action": "create",
+                  "resource": "artifact-label"
+                },
+                {
+                  "action": "list",
+                  "resource": "artifact"
+                },
+                {
+                  "action": "list",
+                  "resource": "repository"
+                }
+              ]
+            }
+          ]
+        }')
+
+      # Extract robot account name and secret
+      ROBOT_ACCOUNT=$(echo $ROBOT_RESPONSE | grep -oP '(?<="name":")[^"]*')
+      ROBOT_SECRET=$(echo $ROBOT_RESPONSE | grep -oP '(?<="secret":")[^"]*')
+
+      echo ".......... Harbor Robot Account Created ............"
+      # Output robot account details
+      echo "Robot Account: $ROBOT_ACCOUNT"
+      echo "Robot Secret: $ROBOT_SECRET"
+    fi
+
+    # }' "https://registry.${SECRET_DOMAIN_0}/api/v2.0/robots" -w "%{http_code}" -o /dev/null -s | grep -E "201|409"
+
+
+    # if [ $? -eq 0 ]; then
+    #   echo ".......... Creating Kubernetes Secret for Robot Account ............"
+    #   kubectl create secret generic harbor-robot-account --from-literal=robot-account.json="$(curl -s -u "${SECRET_HARBOR_ADMIN_USER}:$(cat /etc/harbor/admin-password)" "https://registry.${SECRET_DOMAIN_0}/api/v2.0/robots/automaton")"
+    #   echo ".......... Kubernetes Secret Created ............"
+    # else
+    #   echo ".......... Failed to Create Harbor Robot Account or Secret ............"
+    #   exit 1
+    # fi
+
+
+# ansible.builtin.uri:
+#   url_username: "{{harbor_admin_user}}"
+#   url_password: 'F#esG33ST'
+#   url: "https://registry.moerman.online/api/v2.0/robots/{{create_robot.json.id}}"
+#   validate_certs: yes
+#   method: PATCH
+#   headers:
+#     Content-Type: application/json
+#   body_format: json
+#   force_basic_auth: true
+#   status_code: [200]
+#   body: |
+#     {
+#       "secret": "{{harbor_robot_key}}"
+#     }
