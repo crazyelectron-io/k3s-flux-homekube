@@ -23,7 +23,7 @@ data:
     TOKEN=$(curl -s -u "$USERNAME:$PASSWORD" "$HARBOR_URL/api/v2.0/users/current" | jq -r '.token')
 
     # Check if robot account already exists
-    #EXISTING_ROBOT=$(curl -s -H "Authorization: Bearer $TOKEN" "$HARBOR_URL/api/v2.0/robots" | grep -oP '(?<="name":")'$ROassistant'(?=")')
+    #EXISTING_ROBOT=$(curl -X POST -H "Authorization: Bearer $TOKEN" "$HARBOR_URL/api/v2.0/robots" | grep -oP '(?<="name":")'$ROassistant'(?=")')
     #if [ "$EXISTING_ROBOT" == "$ROassistant" ]; then
     #  echo "Robot account '$ROassistant' already exists."
     #else
