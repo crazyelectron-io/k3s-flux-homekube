@@ -6,3 +6,9 @@ namespace: harbor-system
 resources:
   - robot-script.yaml
   - robot-account.yaml
+configMapGenerator:
+  - name: robot-script-configmap
+    files:
+      - robot-account.sh
+    options:
+      disableNameSuffixHash: true
