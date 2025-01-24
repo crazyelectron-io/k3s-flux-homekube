@@ -15,16 +15,20 @@ spec:
           image: debian:12.6-slim
           command: ["/bin/bash", "-c", "/mnt/scripts/robot-account.sh"]
           volumeMounts:
-          - name: robot-account-script
+          - name: script-volume
             mountPath: /mnt/scripts
       initContainers:
       - name: init-permissions
         image: busybox
-        command: ["sh", "-c", "chmod +x /mnt/scripts/robot-account.sh"]
+        command: ["sh", "-c", "cp /scripts/robot-account.sh /mnt/scripts/robot-account.sh", "chmod +x /mnt/scripts/robot-account.sh"]
         volumeMounts:
         - name: robot-account-script
+          mountPath: /scripts
+        - name: script-volume
           mountPath: /mnt/scripts
       volumes:
       - name: robot-account-script
         configMap:
           name: robot-script-configmap
+      - name: script-volume
+        emptyDir: {}
