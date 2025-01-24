@@ -8,7 +8,7 @@ data:
 
     echo ".......... Installing Required Packages ............"
     apt-get update
-    apt-get install --no-install-recommends --no-install-suggests curl jq -y
+    apt-get install --no-install-recommends --no-install-suggests curl jq ca-certificates -y
 
     echo ".......... Creating Harbor Robot Account ............"
 
