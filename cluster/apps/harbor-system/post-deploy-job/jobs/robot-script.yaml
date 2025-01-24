@@ -11,7 +11,7 @@ data:
     USERNAME="${SECRET_HARBOR_ADMIN_USER}"
     PASSWORD="${SECRET_HARBOR_ADMIN_PASSWORD}"
     ROBOT_NAME="automation"
-    ROBOT_DESCRIPTION=Robot account for Automation"
+    ROBOT_DESCRIPTION="Robot account for Automation"
 
     echo ".......... Creating Harbor Robot Account ............"
 
