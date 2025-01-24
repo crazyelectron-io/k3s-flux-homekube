@@ -64,7 +64,7 @@ data:
     ROBOT_SECRET=$(echo $ROBOT_RESPONSE | jq -r '.secret')
 
     echo ".......... Harbor Robot Account Created ............"
-    # Output robot account details
+    # Output robot account details for debugging purposes
     echo "Robot Account: $ROBOT_ACCOUNT"
     echo "Robot ID: $ROBOT_ID"
     echo "Robot Secret: $ROBOT_SECRET"
