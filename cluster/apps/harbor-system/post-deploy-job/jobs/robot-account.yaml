@@ -13,17 +13,17 @@ spec:
       containers:
         - name: harbor-robot-account
           image: debian:12.6-slim
-          command: ["/bin/bash", "-c", "/scripts/robot-account.sh"]
+          command: ["/bin/bash", "-c", "/mnt/scripts/robot-account.sh"]
           volumeMounts:
           - name: robot-account-script
-            mountPath: /scripts
+            mountPath: /mnt/scripts
       initContainers:
       - name: init-permissions
         image: busybox
-        command: ["sh", "-c", "chmod +x /scripts/robot-account.sh"]
+        command: ["sh", "-c", "chmod +x /mnt/scripts/robot-account.sh"]
         volumeMounts:
         - name: robot-account-script
-          mountPath: /scripts
+          mountPath: /mnt/scripts
       volumes:
       - name: robot-account-script
         configMap:
