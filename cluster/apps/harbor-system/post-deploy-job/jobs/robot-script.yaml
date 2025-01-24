@@ -20,15 +20,17 @@ data:
     echo ".......... Creating Harbor Robot Account ............"
 
     # Get Harbor API token
-    TOKEN=$(curl -s -u "$USERNAME:$PASSWORD" "$HARBOR_URL/api/v2.0/users/current" | jq -r '.token')
+    echo "Get token"
+    TOKEN=$(curl -v -u "$USERNAME:$PASSWORD" "$HARBOR_URL/api/v2.0/users/current" | jq -r '.token')
 
     # Check if robot account already exists
-    #EXISTING_ROBOT=$(curl -X POST -H "Authorization: Bearer $TOKEN" "$HARBOR_URL/api/v2.0/robots" | grep -oP '(?<="name":")'$ROassistant'(?=")')
+    #EXISTING_ROBOT=$(curl -v -X POST -H "Authorization: Bearer $TOKEN" "$HARBOR_URL/api/v2.0/robots" | grep -oP '(?<="name":")'$ROassistant'(?=")')
     #if [ "$EXISTING_ROBOT" == "$ROassistant" ]; then
     #  echo "Robot account '$ROassistant' already exists."
     #else
       # Create robot account
-      ROBOT_RESPONSE=$(curl -s -X POST "$HARBOR_URL/api/v2.0/robots" \
+      echo "Create account"
+      ROBOT_RESPONSE=$(curl -v -X POST "$HARBOR_URL/api/v2.0/robots" \
         -H "Authorization: Bearer $TOKEN" \
         -H "Content-Type: application/json" \
         -d '{
@@ -74,7 +76,7 @@ data:
           ]
         }')
 
-    echo $ROBOT_RESPONSE
+    echo ".. $ROBOT_RESPONSE .."
     # Extract robot account name and secret
     ROBOT_ACCOUNT=$(echo $ROBOT_RESPONSE | grep -oP '(?<="name":")[^"]*')
     ROBOT_SECRET=$(echo $ROBOT_RESPONSE | grep -oP '(?<="secret":")[^"]*')
