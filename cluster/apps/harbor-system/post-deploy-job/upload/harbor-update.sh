@@ -5,9 +5,9 @@ NAMESPACE_PUSH=library
 ROBOT='robot$library+automation'
 
 #determine the file to read
-filename=harbor-images.txt
+#filename=harbor-images.txt
 
-stringContain() { case $2 in *$1* ) return 0;; *) return 1;; esac ;}
+#stringContain() { case $2 in *$1* ) return 0;; *) return 1;; esac ;}
 
 #check if the harbor token is specified
 # if [ -z $HARBOR_TOKEN ]
@@ -20,12 +20,12 @@ stringContain() { case $2 in *$1* ) return 0;; *) return 1;; esac ;}
 echo $HARBOR_TOKEN | docker login registry.moerman.online -u $ROBOT --password-stdin >/dev/null
 
 #loop through the lines in the inout file
-IFS=$'\n'
-for line in `cat $filename`; do
+#IFS=$'\n'
+#for line in `cat $filename`; do
   echo ""
   echo "=============== Processing '$line' ==============="
   IFS=' '
-  read -ra IN <<<"$line"     #reading str as an array of tokens separated by IFS
+#  read -ra IN <<<"$line"     #reading str as an array of tokens separated by IFS
   #split namesapce off if present
   # REGISTRY_PULL=${IN[0]}
   # REPOSITORY_PULL=${IN[1]}
@@ -57,6 +57,6 @@ for line in `cat $filename`; do
   #     exit 1
   #   fi
     echo "=============== Image for $IMG_PUSH processed ==============="
-  fi
-done
-exit 0
+ # fi
+#done
+#exit 0
