@@ -27,11 +27,8 @@ spec:
       initContainers:
       - name: init-permissions
         image: debian:12.6-slim
-        command: ["/bin/bash", "-c", "cp /scripts/robot-account.sh /mnt/scripts/ && chmod +x /mnt/scripts/robot-account.sh && cp /scripts/harbor-update.sh /mnt/scripts/ && chmod +x /mnt/scripts/harbor-update.sh && cp /scripts/harbor-images.txt /mnt/scripts/"]
+        command: ["/bin/bash", "-c", "cp /scripts/harbor-update.sh /mnt/scripts/ && chmod +x /mnt/scripts/harbor-update.sh && cp /scripts/harbor-images.txt /mnt/scripts/"]
         volumeMounts:
-        - name: robot-account-script
-          mountPath: /scripts
-          subPath: robot-account.sh
         - name: harbor-update-script
           mountPath: /scripts
           subPath: harbor-update.sh
@@ -41,9 +38,6 @@ spec:
         - name: script-volume
           mountPath: /mnt/scripts
       volumes:
-      - name: robot-account-script
-        configMap:
-          name: robot-script-configmap
       - name: harbor-update-script
         configMap:
           name: harbor-update-script-configmap
