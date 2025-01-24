@@ -13,7 +13,7 @@ spec:
       containers:
         - name: harbor-robot-account
           image: debian:12.6-slim
-          command: ["/bin/bash", "-c", "/mnt/scripts/robot-account.sh"]
+          command: ["/bin/bash", "-c", "ls -al /mnt/scripts", "/mnt/scripts/robot-account.sh"]
           volumeMounts:
           - name: script-volume
             mountPath: /mnt/scripts
