@@ -6,89 +6,68 @@ data:
   robot-account.sh: |
     #!/bin/bash
 
-    # Variables
-    HARBOR_URL="https://registry.${SECRET_DOMAIN_0}"
-    USERNAME="${SECRET_HARBOR_ADMIN_USER}"
-    PASSWORD="${SECRET_HARBOR_ADMIN_PASSWORD}"
-    ROBOT_NAME="automation"
-    ROBOT_DESCRIPTION="Robot account for Automation"
-
     echo ".......... Installing Required Packages ............"
     apt-get update
     apt-get install --no-install-recommends --no-install-suggests curl jq -y
 
     echo ".......... Creating Harbor Robot Account ............"
 
-    # Get Harbor API token
-    echo "Get token"
-    TOKEN=$(curl -v -u "$USERNAME:$PASSWORD" "$HARBOR_URL/api/v2.0/users/current" | jq -r '.token')
-
-    # Check if robot account already exists
-    #EXISTING_ROBOT=$(curl -v -X POST -H "Authorization: Bearer $TOKEN" "$HARBOR_URL/api/v2.0/robots" | grep -oP '(?<="name":")'$ROassistant'(?=")')
-    #if [ "$EXISTING_ROBOT" == "$ROassistant" ]; then
-    #  echo "Robot account '$ROassistant' already exists."
-    #else
-      # Create robot account
-      #        -H "Authorization: Bearer $TOKEN" 
-      echo "Create account"
-      ROBOT_RESPONSE=$(curl -v -X POST "$HARBOR_URL/api/v2.0/robots" \
-        -H "Content-Type: application/json" \
-        -d '{
-          "name": "'$ROBOT_NAME'",
-          "description": "'$ROBOT_DESCRIPTION'",
-          "duration": 300,
-          "level": "project",
-          "permissions": [
-            {
-              "kind": "project",
-              "namespace": "'$PROJECT_NAME'",
-              "access": [
-                {
-                  "action": "pull",
-                  "resource": "repository"
-                },
-                {
-                  "action": "push",
-                  "resource": "repository"
-                },
-                {
-                  "action": "create",
-                  "resource": "tag"
-                },
-                {
-                  "action": "delete",
-                  "resource": "tag"
-                },
-                {
-                  "action": "create",
-                  "resource": "artifact-label"
-                },
-                {
-                  "action": "list",
-                  "resource": "artifact"
-                },
-                {
-                  "action": "list",
-                  "resource": "repository"
-                }
-              ]
-            }
-          ]
-        }')
+    # Create robot account
+    ROBOT_RESPONSE=$(curl -v -X POST -u "${SECRET_HARBOR_ADMIN_USER}:${SECRET_HARBOR_ADMIN_PASSWORD}" "https://registry.${SECRET_DOMAIN_0}/api/v2.0/robots" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "automation",
+        "description": "Robot account for Automation",
+        "level": "project",
+        "permissions": [
+          {
+            "kind": "project",
+            "namespace": "library",
+            "access": [
+              {
+                "action": "pull",
+                "resource": "repository"
+              },
+              {
+                "action": "push",
+                "resource": "repository"
+              },
+              {
+                "action": "create",
+                "resource": "tag"
+              },
+              {
+                "action": "delete",
+                "resource": "tag"
+              },
+              {
+                "action": "create",
+                "resource": "artifact-label"
+              },
+              {
+                "action": "list",
+                "resource": "artifact"
+              },
+              {
+                "action": "list",
+                "resource": "repository"
+              }
+            ]
+          }
+        ]
+      }')
 
     echo ".. $ROBOT_RESPONSE .."
     # Extract robot account name and secret
     ROBOT_ACCOUNT=$(echo $ROBOT_RESPONSE | grep -oP '(?<="name":")[^"]*')
     ROBOT_SECRET=$(echo $ROBOT_RESPONSE | grep -oP '(?<="secret":")[^"]*')
 
-      echo ".......... Harbor Robot Account Created ............"
-      # Output robot account details
-      echo "Robot Account: $ROBOT_ACCOUNT"
-      echo "Robot Secret: $ROBOT_SECRET"
-    #fi
+    echo ".......... Harbor Robot Account Created ............"
+    # Output robot account details
+    echo "Robot Account: $ROBOT_ACCOUNT"
+    echo "Robot Secret: $ROBOT_SECRET"
 
     # }' "https://registry.${SECRET_DOMAIN_0}/api/v2.0/robots" -w "%{http_code}" -o /dev/null -s | grep -E "201|409"
-
 
     # if [ $? -eq 0 ]; then
     #   echo ".......... Creating Kubernetes Secret for Robot Account ............"
