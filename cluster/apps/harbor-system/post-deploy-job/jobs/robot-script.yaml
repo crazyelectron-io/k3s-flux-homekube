@@ -7,7 +7,7 @@ data:
     #!/bin/bash
 
     # Variables
-    HARBOR_URL="https://registry.${SECRWET_DOMAIN_0}"
+    HARBOR_URL="https://registry.${SECRET_DOMAIN_0}"
     USERNAME="${SECRET_HARBOR_ADMIN_USER}"
     PASSWORD="${SECRET_HARBOR_ADMIN_PASSWORD}"
     ROBOT_NAME="automation"
