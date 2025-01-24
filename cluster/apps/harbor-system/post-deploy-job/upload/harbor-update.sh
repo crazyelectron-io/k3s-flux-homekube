@@ -1,6 +1,5 @@
 #!/bin/bash
-
-REGISTRY_PUSH=https://registry.moerman.online
+REGISTRY_PUSH="https://registry.moerman.online"
 NAMESPACE_PUSH=library
 ROBOT='robot$library+automation'
 
@@ -17,14 +16,14 @@ ROBOT='robot$library+automation'
 # fi
 
 #login to the harbor registry
-echo $HARBOR_TOKEN | docker login registry.moerman.online -u $ROBOT --password-stdin >/dev/null
+#echo $HARBOR_TOKEN | docker login registry.moerman.online -u $ROBOT --password-stdin >/dev/null
 
 #loop through the lines in the inout file
 #IFS=$'\n'
 #for line in `cat $filename`; do
   echo ""
   echo "=============== Processing '$line' ==============="
-  IFS=' '
+  #IFS=' '
 #  read -ra IN <<<"$line"     #reading str as an array of tokens separated by IFS
   #split namesapce off if present
   # REGISTRY_PULL=${IN[0]}
@@ -56,7 +55,7 @@ echo $HARBOR_TOKEN | docker login registry.moerman.online -u $ROBOT --password-s
   #     echo "********** Pull of image $PULL failed, exit code $result **********"
   #     exit 1
   #   fi
-    echo "=============== Image for $IMG_PUSH processed ==============="
+    #echo "=============== Image for $IMG_PUSH processed ==============="
  # fi
 #done
 #exit 0
