@@ -74,9 +74,10 @@ data:
           ]
         }')
 
-      # Extract robot account name and secret
-      ROBOT_ACCOUNT=$(echo $ROBOT_RESPONSE | grep -oP '(?<="name":")[^"]*')
-      ROBOT_SECRET=$(echo $ROBOT_RESPONSE | grep -oP '(?<="secret":")[^"]*')
+    echo $ROBOT_RESPONSE
+    # Extract robot account name and secret
+    ROBOT_ACCOUNT=$(echo $ROBOT_RESPONSE | grep -oP '(?<="name":")[^"]*')
+    ROBOT_SECRET=$(echo $ROBOT_RESPONSE | grep -oP '(?<="secret":")[^"]*')
 
       echo ".......... Harbor Robot Account Created ............"
       # Output robot account details
