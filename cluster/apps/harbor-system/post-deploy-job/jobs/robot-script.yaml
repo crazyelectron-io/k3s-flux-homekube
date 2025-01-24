@@ -29,9 +29,9 @@ data:
     #  echo "Robot account '$ROassistant' already exists."
     #else
       # Create robot account
+      #        -H "Authorization: Bearer $TOKEN" 
       echo "Create account"
       ROBOT_RESPONSE=$(curl -v -X POST "$HARBOR_URL/api/v2.0/robots" \
-        -H "Authorization: Bearer $TOKEN" \
         -H "Content-Type: application/json" \
         -d '{
           "name": "'$ROBOT_NAME'",
