@@ -1,16 +1,16 @@
 #!/bin/bash
 
-REGISTRY_PUSH="${HARBOR_URL}"
-NAMESPACE_PUSH="${HARBOR_NAMESPACE}"
+REGISTRY_PUSH=$HARBOR_URL
+NAMESPACE_PUSH=$HARBOR_NAMESPACE
 ROBOT='robot$library+automation'
 
 #determine the file to read
-filename=${1:-./tools/harbor-images.txt}
+filename=${1:-./harbor-images.txt}
 
 stringContain() { case $2 in *$1* ) return 0;; *) return 1;; esac ;}
 
 #check if the harbor token is specified
-if [ -z ${HARBOR_TOKEN} ]
+if [ -z $HARBOR_TOKEN ]
 then
   echo "HARBOR_TOKEN environment variable for $ROBOT not set, exiting"
   exit 1
@@ -30,7 +30,7 @@ for line in `cat $filename`; do
   REGISTRY_PULL=${IN[0]}
   REPOSITORY_PULL=${IN[1]}
   TAG_PULL=${IN[2]:-latest}    #defaults to 'latest'
-  REPOSITORY_PUSH=${IN[3]:-$REPOSITORY_PULL}
+  REPOSITORY_PUSH=${IN[3]:-$REPOSITORY_PULL }
   TAG_PUSH=${IN[4]:-$TAG_PULL}
   IFS=$'\n'
   if [ $REGISTRY_PULL == \# ]
