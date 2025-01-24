@@ -2,7 +2,7 @@
 
 REGISTRY_PUSH="${HARBOR_URL}"
 NAMESPACE_PUSH="${HARBOR_NAMESPACE}"
-ROBOT="robot$library+automation'
+ROBOT='robot$library+automation'
 
 #determine the file to read
 filename=${1:-./tools/harbor-images.txt}
