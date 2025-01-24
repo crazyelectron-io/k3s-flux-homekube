@@ -1,0 +1,54 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: harbor-update
+  labels:
+    name: harbor-update
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: harbor-update
+          image: debian:12.6-slim
+          command: ["/bin/bash", "-c", "/mnt/scripts/harbor-update.sh"]
+          env:
+            - name: HARBOR_TOKEN
+              value: "${SECRET_HARBOR_ROBOT_SECRET}"
+            - name: HARBOR_URL
+              value: "registry.${SECRET_DOMAIN_0}"
+            - name: HARBOR_NAMESPACE
+              value: "library"
+          volumeMounts:
+          - name: script-volume
+            mountPath: /mnt/scripts
+      initContainers:
+      - name: init-permissions
+        image: debian:12.6-slim
+        command: ["/bin/bash", "-c", "cp /scripts/robot-account.sh /mnt/scripts/ && chmod +x /mnt/scripts/robot-account.sh && cp /scripts/harbor-update.sh /mnt/scripts/ && chmod +x /mnt/scripts/harbor-update.sh && cp /scripts/harbor-images.txt /mnt/scripts/"]
+        volumeMounts:
+        - name: robot-account-script
+          mountPath: /scripts
+          subPath: robot-account.sh
+        - name: harbor-update-script
+          mountPath: /scripts
+          subPath: harbor-update.sh
+        - name: harbor-update-list
+          mountPath: /scripts
+          subPath: harbor-images.txt
+        - name: script-volume
+          mountPath: /mnt/scripts
+      volumes:
+      - name: robot-account-script
+        configMap:
+          name: robot-script-configmap
+      - name: harbor-update-script
+        configMap:
+          name: harbor-update-script-configmap
+      - name: harbor-update-list
+        configMap:
+          name: harbor-update-list-configmap
+      - name: script-volume
+        emptyDir: {}

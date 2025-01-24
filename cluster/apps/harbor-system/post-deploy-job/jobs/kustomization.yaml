@@ -6,9 +6,20 @@ namespace: harbor-system
 resources:
   # - robot-script.yaml
   - robot-account.yaml
+  - harbor-update.yaml
 configMapGenerator:
   - name: robot-script-configmap
     files:
       - robot-account.sh
+    options:
+      disableNameSuffixHash: true
+  - name: harbor-update-script-configmap
+    files:
+      - harbor-update.sh
+    options:
+      disableNameSuffixHash: true
+  - name: harbor-update-list-configmap
+    files:
+      - harbor-images.txt
     options:
       disableNameSuffixHash: true
