@@ -22,8 +22,8 @@ spec:
             - name: HARBOR_NAMESPACE
               value: "library"
           volumeMounts:
-          - name: script-volume
-            mountPath: /mnt/scripts
+            - name: script-volume
+              mountPath: /mnt/scripts
       initContainers:
       - name: init-permissions
         image: debian:12.6-slim

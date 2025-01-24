@@ -6,11 +6,11 @@ namespace: harbor-system
 resources:
   - harbor-update.yaml
 configMapGenerator:
-  - name: harbor-update-script-configmap
-    files:
-      - harbor-update.sh
-    options:
-      disableNameSuffixHash: true
+  # - name: harbor-update-script-configmap
+  #   files:
+  #     - harbor-update.sh
+  #   options:
+  #     disableNameSuffixHash: true
   - name: harbor-update-list-configmap
     files:
       - harbor-images.txt
