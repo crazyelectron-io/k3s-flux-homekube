@@ -30,10 +30,10 @@ spec:
         command: ["/bin/bash", "-c", "cp /scripts/harbor-update.sh /mnt/scripts/ && chmod +x /mnt/scripts/harbor-update.sh && cp /scripts/harbor-images.txt /mnt/scripts/"]
         volumeMounts:
         - name: harbor-update-script
-          mountPath: /scripts
+          mountPath: /scripts/harbor-update.sh
           subPath: harbor-update.sh
         - name: harbor-update-list
-          mountPath: /scripts
+          mountPath: /scripts/harbor-images.txt
           subPath: harbor-images.txt
         - name: script-volume
           mountPath: /mnt/scripts
