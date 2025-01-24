@@ -13,7 +13,7 @@ data:
     echo ".......... Creating Harbor Robot Account ............"
 
     # Create robot account
-    ROBOT_RESPONSE=$(curl -v -u "${SECRET_HARBOR_ADMIN_USER}:${SECRET_HARBOR_ADMIN_PASSWORD}" "https://registry.${SECRET_DOMAIN_0}/api/v2.0/robots" \
+    ROBOT_RESPONSE=$(curl -v -u "${SECRET_HARBOR_ADMIN_USER}:dirmEf-zagvi0-tezdup" "https://registry.${SECRET_DOMAIN_0}/api/v2.0/robots" \
       -H "Content-Type: application/json" \
       -d '{
         "name": "automation",
