@@ -149,7 +149,7 @@ spec:
         repository: goharbor/nginx-photon
         # tag: dev
       automountServiceAccountToken: false
-      replicas: 1
+      replicas: 3
       revisionHistoryLimit: 10
       # resources:
       #  requests:
@@ -166,7 +166,8 @@ spec:
       image:
         repository: goharbor/harbor-portal
         # tag: dev
-      replicas: 1
+      replicas: 2
+      maxUnavailable: 1
       revisionHistoryLimit: 10
       # resources:
       #  requests:
@@ -177,6 +178,7 @@ spec:
         repository: goharbor/harbor-core
         # tag: dev
       replicas: 1
+      maxUnavailable: 0
       revisionHistoryLimit: 10
       startupProbe:
         enabled: true
@@ -191,6 +193,7 @@ spec:
         repository: goharbor/harbor-jobservice
         # tag: dev
       replicas: 1
+      maxUnavailable: 0
       revisionHistoryLimit: 10
       # resources:
       #   requests:
@@ -307,6 +310,7 @@ spec:
         repository: goharbor/harbor-exporter
         # tag: dev
       replicas: 1
+      maxUnavailable: 0
       revisionHistoryLimit: 10
       # resources:
       #  requests:
