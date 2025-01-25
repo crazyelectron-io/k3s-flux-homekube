@@ -1,0 +1,13 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: mealie
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: ssh://git@github.com/crazyelectron-io/k3s-flux-mealie
+  ref:
+    branch: main
+  secretRef:
+    name: mealie-git
