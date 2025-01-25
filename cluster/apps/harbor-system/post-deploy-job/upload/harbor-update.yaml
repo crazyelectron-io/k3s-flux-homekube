@@ -20,6 +20,8 @@ spec:
               value: "registry.${SECRET_DOMAIN_0}"
             - name: HARBOR_NAMESPACE
               value: "library"
+            - name: HARBOR_ACCOUNT
+              value: 'robot$library+automation'
           volumeMounts:
             - name: script-volume
               mountPath: /mnt/scripts
