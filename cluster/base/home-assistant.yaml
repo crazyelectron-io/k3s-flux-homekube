@@ -10,7 +10,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  interval: 5m0s
+  interval: 30m
   path: ./home-assistant
   prune: true
   dependsOn:

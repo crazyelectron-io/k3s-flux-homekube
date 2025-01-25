@@ -8,7 +8,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  interval: 15m
+  interval: 30m
   path: ./cluster/infrastructure
   prune: true
   wait: true
