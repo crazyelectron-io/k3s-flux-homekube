@@ -14,10 +14,10 @@ spec:
           image: debian:12.6-slim
           command: ["/bin/bash", "-c", "/mnt/scripts/harbor-update.sh"]
           env:
-          #   - name: HARBOR_TOKEN
-          #     value: "${SECRET_HARBOR_ROBOT_SECRET}"
-          #   - name: HARBOR_URL
-          #     value: "registry.${SECRET_DOMAIN_0}"
+            - name: HARBOR_TOKEN
+              value: "${SECRET_HARBOR_ROBOT_SECRET}"
+            - name: HARBOR_URL
+              value: "registry.${SECRET_DOMAIN_0}"
             - name: HARBOR_NAMESPACE
               value: "library"
           volumeMounts:
