@@ -22,6 +22,8 @@ spec:
               value: "library"
             - name: HARBOR_ACCOUNT
               value: 'robot$library+automation'
+            - name: HARBOR_REPOSITORIES
+              value: 'harbor-images.txt'
           volumeMounts:
             - name: script-volume
               mountPath: /mnt/scripts
