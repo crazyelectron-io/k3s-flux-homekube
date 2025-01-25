@@ -15,19 +15,3 @@ spec:
   wait: true
   dependsOn:
     - name: harbor-system-harbor
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: harbor-system-upload-job
-  namespace: flux-system
-spec:
-  path: ./cluster/apps/harbor-system/post-deploy-job/upload
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  interval: 5m
-  prune: true
-  wait: true
-  dependsOn:
-    - name: harbor-system-post-deploy-job
