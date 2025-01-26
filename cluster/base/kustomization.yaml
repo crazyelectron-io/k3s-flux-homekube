@@ -8,7 +8,7 @@ resources:
   - infrastructure.yaml
   - apps.yaml
   - authentik-source.yaml
-  # - authentik.yaml
+  - authentik.yaml
   - media-source.yaml
   - media.yaml
   - home-assistant-source.yaml
