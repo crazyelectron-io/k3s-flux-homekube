@@ -1,0 +1,13 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: authentik
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://github.com/crazyelectron-io/k3s-flux-authentik
+  ref:
+    branch: main
+  secretRef:
+    name: k3s-flux-authentik-git

@@ -7,11 +7,13 @@ resources:
   - flux-system
   - infrastructure.yaml
   - apps.yaml
+  - authentik-source.yaml
+  # - authentik.yaml
   - media-source.yaml
   - media.yaml
   - home-assistant-source.yaml
   - home-assistant.yaml
-  - openhab-source.yaml
+  # - openhab-source.yaml
   # - openhab.yaml
   - mealie-source.yaml
   - mealie.yaml
