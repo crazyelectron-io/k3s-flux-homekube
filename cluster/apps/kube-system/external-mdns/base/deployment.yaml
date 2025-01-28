@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &app external-mdns
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: *app
+  template:
+    metadata:
+      labels:
+        app: *app
+    spec:
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+        runAsNonRoot: true
+      hostNetwork: true
+      serviceAccountName: *app
+      containers:
+        - name: *app
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          image: blakec/external-mdns:latest
+          args:
+          - -source=ingress
+          - -source=service
+          resources: {}
