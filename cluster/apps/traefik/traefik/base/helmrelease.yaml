@@ -70,22 +70,28 @@ spec:
         redirectTo:
           port: websecure
           priority: 10
-        # See https://doc.traefik.io/traefik/routing/entrypoints/#transport
-        transport:
-          respondingTimeouts:
-            readTimeout:
-            writeTimeout:
-            idleTimeout:
-          lifeCycle:
-            requestAcceptGraceTimeout:
-            graceTimeOut:
-          keepAliveMaxRequests:
-          keepAliveMaxTime:
       websecure:
         port: 8443
         expose:
           default: true
         exposedPort: 443
+        protocol: TCP
+        tls:
+          enabled: true
+      web-ext:
+        port: 8008
+        expose:
+          default: true
+        exposedPort: 81
+        protocol: TCP
+        redirectTo:
+          port: websecure-ext
+          priority: 10
+      websecure-ext:
+        port: 8444
+        expose:
+          default: true
+        exposedPort: 444
         protocol: TCP
         tls:
           enabled: true
