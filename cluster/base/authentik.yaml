@@ -10,7 +10,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  interval: 30m
+  interval: 15m
   path: ./authentik
   prune: true
   dependsOn:
@@ -19,7 +19,7 @@ spec:
     kind: GitRepository
     name: *app
   wait: true
-  timeout: 5m0s
+  timeout: 10m
   postBuild:
     substituteFrom:
       - kind: ConfigMap
