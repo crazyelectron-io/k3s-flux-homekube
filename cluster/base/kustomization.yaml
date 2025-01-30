@@ -6,7 +6,7 @@ namespace: flux-system
 resources:
   - flux-system
   - infrastructure.yaml
-  - apps.yaml
+  - apps.yaml 
   - authentik-source.yaml
   - authentik.yaml
   - media-source.yaml

@@ -15,4 +15,3 @@ resources:
   - rancher-charts.yaml
   - harbor-charts.yaml
   - authentik-charts.yaml
-  - zitadel-charts.yaml
