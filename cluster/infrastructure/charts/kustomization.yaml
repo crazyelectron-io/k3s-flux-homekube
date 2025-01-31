@@ -10,9 +10,9 @@ resources:
   - cloudnative-pg-charts.yaml
   - jetstack-charts.yaml
   - traefik-charts.yaml
+  - plcnk-charts.yaml
   - grafana-charts.yaml
   - prometheus-community-charts.yaml
   - rancher-charts.yaml
   - harbor-charts.yaml
   - authentik-charts.yaml
-  - plcnk-charts.yaml
