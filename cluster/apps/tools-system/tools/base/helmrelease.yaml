@@ -1,0 +1,74 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ittools
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: *app
+      version: 2.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: plnck-charts
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    # This chart inherits from our common library chart. You can check the default values/options here:
+    # https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
+    controllers:
+      main:
+        type: deployment
+        replicas: 1
+        containers:
+          app:
+            image:
+              repository: ghcr.io/corentinth/it-tools
+              pullPolicy: IfNotPresent
+              tag: 2024.10.22-7ca5933
+            env:
+              TZ: UTC
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            fsGroup: 65534
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
+    persistence:
+      data:
+        enabled: true
+        retain: true
+        storageClass: longhorn
+        accessMode: ReadWriteOnce
+        size: 1Gi
+    ingress:
+      main:
+        enabled: false
