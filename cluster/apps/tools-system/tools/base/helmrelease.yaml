@@ -5,16 +5,16 @@ kind: HelmRelease
 metadata:
   name: &app ittools
 spec:
-  interval: 5m
+  interval: 3m
   chart:
     spec:
-      chart: plcnk/it-tools
+      chart: it-tools
       version: 2.1.2
       sourceRef:
         kind: HelmRepository
         name: plcnk-charts
         namespace: flux-system
-      interval: 5m
+      interval: 3m
   install:
     createNamespace: true
     remediation:

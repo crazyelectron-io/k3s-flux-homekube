@@ -10,10 +10,10 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  interval: 5m
+  interval: 3m
   prune: true
   wait: true
   dependsOn:
     - name: traefik-traefik
-    - name: longhorn-system-longhorn
+    # - name: longhorn-system-longhorn
     # - name: harbor-system-harbor
