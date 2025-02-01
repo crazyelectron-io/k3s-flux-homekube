@@ -15,5 +15,5 @@ spec:
   wait: true
   dependsOn:
     - name: traefik-traefik
-    # - name: longhorn-system-longhorn
-    # - name: harbor-system-harbor
+    - name: longhorn-system-longhorn
+    - name: harbor-system-harbor
