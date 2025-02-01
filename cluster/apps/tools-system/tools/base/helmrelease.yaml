@@ -8,7 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: *app
+      chart: plcnk/it-tools
       version: 2.1.2
       sourceRef:
         kind: HelmRepository
