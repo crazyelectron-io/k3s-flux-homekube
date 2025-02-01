@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: "Host(`tools.${SECRET_DOMAIN_0}`)"
+    - match: Host(`tools.${SECRET_DOMAIN_0}`)
       kind: Rule
       services:
         - name: http
