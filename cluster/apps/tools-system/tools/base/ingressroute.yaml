@@ -11,6 +11,6 @@ spec:
     - match: Host(`tools.${SECRET_DOMAIN_0}`)
       kind: Rule
       services:
-        - name: http
+        - name: main
           port: 8080
   tls: {}
